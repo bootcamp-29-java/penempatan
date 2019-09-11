@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" minlength="6" id="newPassword" name='newPassword' placeholder="New Password" required/>
-                                <input class="form-control" name="token" id="token" type="hidden" value="">
+                                <input class="form-control" name="token" id="token" type="hidden" value="<%=token%>">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" minlength="6" id="confirmPass" name='confirmPass' placeholder="Confirmation New Password" required/>     
@@ -77,3 +77,6 @@
         </div>
     </body>
 </html>
+<%
+    session.removeAttribute("token");
+%>
