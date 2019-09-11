@@ -49,9 +49,9 @@ public class AccountController implements IAccountController{
             account.setVerifTime(date);
             account.setStatus(status1);
             if (igdao.saveOrDelete(account, true)) {
-                System.out.println("berhasil");
+                result = "Berhasil";
             } else {
-                System.out.println("gagal");
+                result = "Gagal";
             }
         } catch (Exception e) {
             result = "Maaf id Employee tidak Terdaftar";
