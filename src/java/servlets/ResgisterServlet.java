@@ -90,7 +90,7 @@ public class ResgisterServlet extends HttpServlet {
             if (iac.createAccount(id, "", token, "0", "").equalsIgnoreCase("Berhasil")) {
                 AllMethod.sendEmail(email, firstName+" "+lastName, token);
                 request.getSession().setAttribute("status", status);
-                response.sendRedirect("placement.jsp");
+                response.sendRedirect("index.jsp");
             }else{
                 request.getSession().setAttribute("status", status);
                 response.sendRedirect("index.jsp");
