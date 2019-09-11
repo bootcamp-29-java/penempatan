@@ -5,9 +5,8 @@
  */
 package servlets;
 
-import controllers.EmployeeRoleController;
-import controllers.LoginRegisterController;
-import icontrollers.ILoginRegisterController;
+import controllers.EmployeeController;
+import icontrollers.IEmployeeController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -23,13 +21,11 @@ import tools.HibernateUtil;
  *
  * @author Lenovo
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/loginservlet"})
-public class LoginServlet extends HttpServlet {
-    
-    private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private ILoginRegisterController ilrc = new LoginRegisterController(factory);
-    private EmployeeRoleController erc = new EmployeeRoleController(factory);
+@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
+public class EmployeeServlet extends HttpServlet {
     private String status;
+    private SessionFactory factory = HibernateUtil.getSessionFactory();
+    private IEmployeeController iec = new EmployeeController(factory);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,16 +40,9 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            request.getSession().setAttribute("employees", iec.getAll());
+            request.getSession().setAttribute("employeeId", iec.genId());
+            response.sendRedirect("index.jsp");
         }
     }
 
@@ -69,14 +58,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        HttpSession session = request.getSession(true);
-        if (action.equalsIgnoreCase("logout")) {
-            session.getAttribute("sessionlogin");
-            session.invalidate();
-            request.getSession().setAttribute("status", "Anda Telah Logout");
-            response.sendRedirect("admin/login.jsp");
-        }
         processRequest(request, response);
     }
 
@@ -91,17 +72,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        status = ilrc.login(email, password);
-        if (status.equalsIgnoreCase("Login Berhasil")) {
-            request.getSession().setAttribute("status2", status);
-            request.getSession().setAttribute("sessionlogin", erc.getById(email));
-            response.sendRedirect("index.jsp");
-        } else {
-            request.getSession().setAttribute("status2", status);
-            response.sendRedirect("admin/login.jsp");
-        }
         processRequest(request, response);
     }
 

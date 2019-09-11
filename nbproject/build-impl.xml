@@ -1016,9 +1016,9 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.activation.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.javax.json-1.1.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.javax.json-1.1.4.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.activation.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.mail.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <!--<copyfiles files="${file.reference.javax.json-1.1.4.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>-->
+        <!--<copyfiles files="${file.reference.activation.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>-->
+        <!--<copyfiles files="${file.reference.mail.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>-->
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>

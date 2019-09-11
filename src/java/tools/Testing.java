@@ -77,10 +77,12 @@ public class Testing {
 //        e.setIsDelete(false);
 //        System.out.println(gdao.saveOrDelete(e, true));
 
-        IEmployeeController iec = new EmployeeController(factory);
-        System.out.println(iec.save("3", "Mus", "mus", "mus", "mus", "2010-10-10", "Male", "WNI", "kosongi", false));
-        System.out.println(iec.delete("3"));
-        show();
+//        IEmployeeController iec = new EmployeeController(factory);
+//        System.out.println(iec.save("3", "Mus", "mus", "mus", "mus", "2010-10-10", "Male", "WNI", "kosongi", false));
+//        System.out.println(iec.delete("3"));
+//        show();
+          IEmployeeController iec = new EmployeeController(factory);
+          System.out.println(iec.save("2", "khrisna", "Khrisna", "accountgame607@gmail.com", "Klaten ", "2019-09-03", "Male", "WNI","image/default-image.png", false));
 
     }
 

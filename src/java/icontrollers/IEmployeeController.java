@@ -21,4 +21,5 @@ public interface IEmployeeController {
     public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, boolean is_delete);
 
     public String delete(String id);
+    public String genId();
 }

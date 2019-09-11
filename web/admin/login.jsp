@@ -11,62 +11,49 @@
 <%
     String status = (String) session.getAttribute("status");
     List<EmployeeRole> username = (List<EmployeeRole>) session.getAttribute("sessionlogin");
+    out.print(status);
     if (username != null) {
         response.sendRedirect("../index.jsp");
     } else {
 %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Belajar Web Coba - Login</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <style>
-            body{
-                background: url("http://cdn.backgroundhost.com/backgrounds/subtlepatterns/arches.png");
-            }
-
-            .absolute-center {
-                margin: auto;
-                position: absolute;
-                top: 0; left: 0; bottom: 0; right: 0;
-            }
-
-            .absolute-center.is-responsive {
-                width: 50%; 
-                height: 50%;
-                min-width: 200px;
-                max-width: 300px;
-                padding: 0px;
-            }
-        </style>
+        <title>Login</title>
     </head>
     <body>
-        <div class="container">
-            <div class="absolute-center is-responsive">
-                <div class="row">
-                    <div class="col-md">
-                        <form action="../loginservlet" method="POST" id="loginForm" autocomplete="off">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center" style="height:100vh">
+                <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                    <form action="../loginservlet" method="POST" id="loginForm" autocomplete="off">
+
+                        <div class="form-group">
+                            <h3><p align="center">LOGIN</h3>
                             <div class="form-group">
-                                <h3 class="text-center">Silahkan Login Dahulu</h3>
+                                <input class="form-control form-control-lg" placeholder="E-mail" type="text" onchange="" name="email">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <input class="form-control form-control-lg" placeholder="Password" type="password" name="password">
+                            </div>
+
+
+                            <div class="form-group ">
+                                <div class=" d-flex justify-content-center">
+                                    <!-- Forgot password -->
+                                    <a href="">Forgot my password</a>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="email" id="email" name='email' placeholder="Email" required/>          
+                                <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="">Login</button>
                             </div>
-                            <div class="form-group">
-                                <input class="form-control" type="password" id="password" name='password' placeholder="Password" required/>     
-                            </div>
-                            <div class="form-group">
-                                <div class="g-recaptcha" data-sitekey="6LdDwLUUAAAAAFLpOpQCbMoIAF1SxSRqaiIVWwNG" data-callback="correctCaptcha"></div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                <hr>
-                            </div>
-                        </form>    
-                    </div>  
-                </div>    
+                        </div>
+                    </form>   
+                </div>
             </div>
         </div>
         <script>$('.alert').alert();</script>
@@ -80,7 +67,7 @@
                     out.println("</script>;");
                 } else {
                     out.println("<script type=\"text/javascript\">;");
-                    out.println("swal(\"GAGAL !\", \"" + status + "\", \"error\");");
+                    out.println("swal(\"Oops!\", \"" + status + "\", \"error\");");
                     out.println("</script>;");
                 }
             }
