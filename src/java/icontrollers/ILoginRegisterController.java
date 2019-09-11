@@ -12,5 +12,5 @@ package icontrollers;
 public interface ILoginRegisterController {
 
     String login(String email, String password);
-    
+    String updateByToken(String token, String newPassword);
 }

@@ -16,6 +16,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import models.Account;
+import models.Status;
 import org.hibernate.SessionFactory;
 import tools.BCrypt;
 import tools.AllMethod;
@@ -45,6 +46,28 @@ public class LoginRegisterController implements ILoginRegisterController {
             } else {
                 result = "Login Gagal";
             }
+        return result;
+    }
+
+    @Override
+    public String updateByToken(String token, String newPassword) {
+        Account account = ilrdao.getByToken(token);
+        String pass = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+        account.setPassword(pass);
+        
+        Status status = new Status("0");
+        account.setStatus(status);
+        account.setToken("");
+        String result;
+        try {
+        if (ilrdao.updateAccount(account)) {
+            result = "Password Sudah Dirubah";
+        } else {
+            result = "Password Gagal Dirubah";
+        }
+        } catch (Exception e) {
+            result = "Error Ke Catch";
+        }
         return result;
     }
 

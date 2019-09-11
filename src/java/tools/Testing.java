@@ -11,6 +11,7 @@ import daos.LoginRegisterDAO;
 import daos.EmployeeRoleDAO;
 import daos.GeneralDAO;
 import icontrollers.IEmployeeController;
+import icontrollers.ILoginRegisterController;
 import idaos.IGeneralDAO;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,14 +34,14 @@ import org.hibernate.SessionFactory;
  * @author Reza
  */
 public class Testing {
-
+    
     public static void show() {
         GeneralDAO<Employee> gdao = new GeneralDAO<>(HibernateUtil.getSessionFactory(), Employee.class);
         for (Employee employee : gdao.getAll()) {
             System.out.println(employee.getId() + " - " + employee.getFirstName());
         }
     }
-
+    
     public static void main(String[] args) throws ParseException, FileNotFoundException {
         SessionFactory factory = HibernateUtil.getSessionFactory();
 //        LoginRegisterDAO dao = new LoginRegisterDAO(factory);
@@ -81,9 +82,11 @@ public class Testing {
 //        System.out.println(iec.save("3", "Mus", "mus", "mus", "mus", "2010-10-10", "Male", "WNI", "kosongi", false));
 //        System.out.println(iec.delete("3"));
 //        show();
-          IEmployeeController iec = new EmployeeController(factory);
-          System.out.println(iec.save("2", "khrisna", "Khrisna", "accountgame607@gmail.com", "Klaten ", "2019-09-03", "Male", "WNI","image/default-image.png", false));
-
+//          IEmployeeController iec = new EmployeeController(factory);
+//          System.out.println(iec.save("2", "khrisna", "Khrisna", "accountgame607@gmail.com", "Klaten ", "2019-09-03", "Male", "WNI","image/default-image.png", false));
+        ILoginRegisterController ilrc = new LoginRegisterController(factory);
+        System.out.println(ilrc.updateByToken("9ekeZyz0NRfzQ9LkohXI", "Mustofa98"));
+        
     }
-
+    
 }

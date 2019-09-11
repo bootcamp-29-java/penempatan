@@ -5,10 +5,8 @@
  */
 package servlets;
 
-import controllers.AccountController;
-import controllers.EmployeeController;
-import icontrollers.IAccountController;
-import icontrollers.IEmployeeController;
+import controllers.LoginRegisterController;
+import icontrollers.ILoginRegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,22 +14,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
-import tools.AllMethod;
 import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "ResgisterServlet", urlPatterns = {"/registerservlet"})
-public class ResgisterServlet extends HttpServlet {
+@WebServlet(name = "VerifikasiServlet", urlPatterns = {"/verifikasiservlet"})
+public class VerifikasiServlet extends HttpServlet {
+
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
-    private IAccountController iac = new AccountController(factory);
-    
+    private ILoginRegisterController ilrc = new LoginRegisterController(factory);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,7 +41,16 @@ public class ResgisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet VerifikasiServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet VerifikasiServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -62,6 +66,9 @@ public class ResgisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String token = request.getParameter("v");
+        request.getSession().setAttribute("token", token);
+        response.sendRedirect("reset-password.jsp?v=" + token);
         processRequest(request, response);
     }
 
@@ -76,25 +83,18 @@ public class ResgisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String birthPlace = request.getParameter("birthPlace");
-        String birthDate = request.getParameter("birthDate");
-        String gender = request.getParameter("gender");
-        String nationality = request.getParameter("nationality");
-        String token = AllMethod.generateToken();
-        status = iec.save(id, firstName, lastName, email, birthPlace, birthDate, gender, nationality, email, false);
-        if (status.equalsIgnoreCase("Save data berhasil")) {
-            if (iac.createAccount(id, "", token, "-1", "").equalsIgnoreCase("Berhasil")) {
-                AllMethod.sendEmail(email, firstName+" "+lastName, token);
-                request.getSession().setAttribute("status", status);
-                response.sendRedirect("index.jsp");
-            }else{
-                request.getSession().setAttribute("status", status);
-                response.sendRedirect("index.jsp");
-            }
+        String newPassword = request.getParameter("newPassword");
+        String confirmPass = request.getParameter("confirmPass");
+        String token = request.getParameter("token");
+
+        status = ilrc.updateByToken(token, newPassword);
+        if (status.equals("Password Sudah Dirubah")) {
+            request.getSession().setAttribute("status", status);
+            response.sendRedirect("admin/login.jsp");
+        } else {
+            request.getSession().setAttribute("status", status);
+            response.sendRedirect("admin/login.jsp");
+            processRequest(request, response);
         }
         processRequest(request, response);
     }

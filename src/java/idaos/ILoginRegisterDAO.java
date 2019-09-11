@@ -14,5 +14,6 @@ import models.Account;
 public interface ILoginRegisterDAO {
 
     Account getByEmail(String email);
-    
+    Account getByToken(String token);
+    boolean updateAccount(Account account);
 }

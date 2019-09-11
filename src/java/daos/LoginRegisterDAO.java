@@ -47,4 +47,41 @@ public class LoginRegisterDAO implements ILoginRegisterDAO{
         }
         return account;
     }
+
+    @Override
+    public Account getByToken(String token) {
+        Account account = new Account();
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            query = session.createQuery("FROM Account WHERE token=:token");
+            query.setParameter("token", token);
+            account = (Account) query.uniqueResult();
+        } catch (Exception e) {
+            e.getStackTrace();
+            if (transaction !=null) {
+                transaction.rollback();
+            }
+        }finally{
+            session.close();
+        }
+        return account;
+    }
+
+    @Override
+    public boolean updateAccount(Account account) {
+        boolean result = false;
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(account);
+            transaction.commit();
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }finally{
+            session.close();
+        }
+        return result;
+    }
 }

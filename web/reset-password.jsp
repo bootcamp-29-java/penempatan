@@ -37,10 +37,16 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body>
+        <!--inisialisasi session-->
+        <%
+            String token = (String) session.getAttribute("token");
+        %>
+        <!--inisialisasi session-->
+
         <!-- Just an image -->
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand" href="#">
-                
+
                 <img src="https://getbootstrap.com/" width="30" height="30" alt="">
             </a>
         </nav>
@@ -49,7 +55,7 @@
             <div class="absolute-center is-responsive">
                 <div class="row">
                     <div class="col-md">
-                        <form action="verifikasi" method="POST" id="loginForm" autocomplete="off">
+                        <form action="verifikasiservlet" method="POST" id="loginForm" autocomplete="off">
                             <div class="form-group">
                                 <h3 class="text-center">Reset Password</h3>
                             </div>
