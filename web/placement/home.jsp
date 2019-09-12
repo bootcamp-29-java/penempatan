@@ -39,11 +39,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="asset-management.jsp">Asset Management</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-danger" onClick="logout()" href="#">Logout</a>
-                    </li>
                 </ul>
             </div>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit" onclick="window.location.href = 'login.jsp';">Logout</button>
+            </form>
         </nav>
 
         <!--coba-->
@@ -92,7 +92,7 @@
                                 </a>
                             </li>
                         </ul>
-                        
+
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Data Class</span>
                         </h6>
@@ -103,19 +103,14 @@
                                     Lesson
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="batch.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Batch
-                                </a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link" href="class.jsp">
                                     <span data-feather="file-text"></span>
-                                    Class
+                                    Class and Batch
                                 </a>
                             </li>
-                            
+
                             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                 <span>Data Client</span>
                             </h6>
@@ -132,19 +127,10 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Hai Selamat Datang</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar"></span>
-                                This week
-                            </button>
-                        </div>
                     </div>
+                    
                 </main>
-                
+
             </div>
         </div>
         <!--coba-->

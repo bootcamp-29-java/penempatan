@@ -12,7 +12,7 @@
     List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     String employeeId = (String) session.getAttribute("employeeId");
     List<Employee> employees = (List<Employee>) session.getAttribute("employees");
-    String status = (String) session.getAttribute("status");
+    String status = (String) session.getAttribute("status2");
     out.print(status);
     if (logSession == null) {
         out.println("<script>alert('Anda belum login!')</script>");
@@ -49,7 +49,7 @@
                         <a class="nav-link" href="assessment.jsp">Assessment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="placement.jsp">Placement</a>
+                        <a class="nav-link" href="placement/home.jsp">Placement</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="asset-management.jsp">Asset Management</a>

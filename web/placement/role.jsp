@@ -34,16 +34,16 @@
                         <a class="nav-link" href="assessment.jsp">Assessment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="placement.jsp">Placement</a>
+                        <a class="nav-link" href="home.jsp">Placement</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="asset-management.jsp">Asset Management</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-danger" onClick="logout()" href="#">Logout</a>
-                    </li>
                 </ul>
             </div>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit" onclick="window.location.href = 'login.jsp';">Logout</button>
+            </form> 
         </nav>
 
         <!--coba-->
@@ -92,7 +92,7 @@
                                 </a>
                             </li>
                         </ul>
-                        
+
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Data Class</span>
                         </h6>
@@ -103,19 +103,14 @@
                                     Lesson
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="batch.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Batch
-                                </a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="class.jsp">
                                     <span data-feather="file-text"></span>
-                                    Class
+                                    Class and Batch
                                 </a>
                             </li>
-                            
+
                             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                 <span>Data Client</span>
                             </h6>
@@ -132,22 +127,104 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Employee Role</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <div class="container">
+                        <div class="card w-100" style="margin-top: 20px;">
+                            <h5 class="card-header">Create Employee Account</h5>
+                            <div class="card-body">
+                                <h5 class="card-title">Input New Role</h5>
+                                <p class="card-text">You can input new role data in here</p>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
+                                    Add Employee Role   
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
+                                    Add Role   
+                                </button>
                             </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar"></span>
-                                This week
-                            </button>
                         </div>
                     </div>
                 </main>
-                
+
             </div>
         </div>
         <!--coba-->
+        
+        <div class="modal fade" id="addEmployeeRole" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Role</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputID">ID</label>
+                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmployee">Employee</label>
+                                    <select id="employee" name="employee" class="form-control">
+                                        <option>ID</option>
+                                        <option>ID</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputRole">Role</label>
+                                    <select id="role" name="role" class="form-control">
+                                        <option></option>
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary">Add Employee Role</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Role</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="registerservlet" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputID">ID</label>
+                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="inputName">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Role Nmae" value="">
+                                </div>
+                                
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary">Add Role</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

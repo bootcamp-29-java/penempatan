@@ -95,7 +95,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         status = ilrc.login(email, password);
         if (status.equalsIgnoreCase("Login Berhasil")) {
-            request.getSession().setAttribute("status", status);
+            request.getSession().setAttribute("status2", status);
             request.getSession().setAttribute("sessionlogin", erc.getById(email));
             response.sendRedirect("index.jsp");
         } else {

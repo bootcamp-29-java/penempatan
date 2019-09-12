@@ -34,19 +34,19 @@
                         <a class="nav-link" href="assessment.jsp">Assessment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="placement.jsp">Placement</a>
+                        <a class="nav-link" href="home.jsp">Placement</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="asset-management.jsp">Asset Management</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-danger" onClick="logout()" href="#">Logout</a>
-                    </li>
                 </ul>
             </div>
-        </nav>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit" onclick="window.location.href = 'login.jsp';">Logout</button>
+            </form>
+        </nav>  
 
-        <!--coba-->
+
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -92,7 +92,7 @@
                                 </a>
                             </li>
                         </ul>
-                        
+
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Data Class</span>
                         </h6>
@@ -103,19 +103,14 @@
                                     Lesson
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="batch.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Batch
-                                </a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link" href="class.jsp">
                                     <span data-feather="file-text"></span>
-                                    Class
+                                    Class and Batch
                                 </a>
                             </li>
-                            
+
                             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                 <span>Data Client</span>
                             </h6>
@@ -128,28 +123,106 @@
                         </ul>
                     </div>
                 </nav>
-
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Employee</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <!--                    panggil modal-->
+                    <div class="container">
+                        <div class="card w-100" style="margin-top: 20px;">
+                            <h5 class="card-header">Add Employee</h5>
+                            <div class="card-body">
+                                 <h5 class="card-title">Input New Employee</h5>
+                                <p class="card-text">You can input new Employee data in here</p>
+                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                    Add Employee
+                                </button>
                             </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar"></span>
-                                This week
-                            </button>
                         </div>
                     </div>
+                    <!--panggil modal-->
                 </main>
-                
+
             </div>
         </div>
-        <!--coba-->
 
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Employee</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputEmail4">ID</label>
+                                    <input type="number" class="form-control" id="id" name="id" placeholder="First Name" value="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="yourmail@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Birth Place</label>
+                                    <input type="text" id="birthPlace" name="birthPlace" class="form-control" placeholder="Birth Place">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Birth Date</label>
+                                    <input type="date" id="birthDate" name="birthDate" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputGender">Gender</label>
+                                <select id="gender" name="gender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputNationality">Nationality</label>
+                                <select id="nationality" name="nationality" class="form-control">
+                                    <option value="WNI">WNI</option>
+                                    <option value="WNA">WNA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputReligion">Religion</label>
+                                <select id="religion" name="religion" class="form-control">
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>
