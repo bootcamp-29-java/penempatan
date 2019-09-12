@@ -34,11 +34,11 @@
                         <div class="form-group">
                             <h3><p align="center">LOGIN</h3>
                             <div class="form-group">
-                                <input class="form-control form-control-lg" placeholder="E-mail" type="text" onchange="" name="email">
+                                <input class="form-control form-control-lg" placeholder="E-mail" type="text" onchange="" name="email" id="email">
                             </div>
 
                             <div class="form-group mb-2">
-                                <input class="form-control form-control-lg" placeholder="Password" type="password" name="password">
+                                <input class="form-control form-control-lg" placeholder="Password" type="password" name="password" id="password">
                             </div>
 
 
