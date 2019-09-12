@@ -5,6 +5,12 @@
  */
 package servlets;
 
+import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
+import controllers.RoleController;
+import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
+import icontrollers.IRoleController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -24,6 +30,9 @@ public class RoleServlet extends HttpServlet {
 
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
+    private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+    private IRoleController irc = new RoleController(factory);
+    private IEmployeeController iec = new EmployeeController(factory);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,16 +46,10 @@ public class RoleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RoleServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RoleServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            request.getSession().setAttribute("employeesRole", ierc.getAll());
+            request.getSession().setAttribute("roles", irc.getAll());
+            request.getSession().setAttribute("employees", iec.getAll());
+            response.sendRedirect("role.jsp");
         }
     }
 

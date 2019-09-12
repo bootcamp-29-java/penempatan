@@ -5,8 +5,16 @@
  */
 package servlets;
 
+import controllers.BatchControler;
+import controllers.ClassController;
 import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
+import controllers.LessonController;
+import icontrollers.IBatchController;
+import icontrollers.IClassController;
 import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
+import icontrollers.ILessonController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,30 +27,27 @@ import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
-    private String status;
+@WebServlet(name = "ClassServlet", urlPatterns = {"/classservlet"})
+public class ClassServlet extends HttpServlet {
+    String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private IClassController ican = new ClassController(factory);
+    private IBatchController ib = new BatchControler(factory);
+    private ILessonController ilc = new LessonController(factory);
+    private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("employees", iec.getAll());
-            request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+            request.getSession().setAttribute("Kelass", ican.getall());
+            request.getSession().setAttribute("Batchs", ib.getall());
+            request.getSession().setAttribute("lessons", ilc.getall());
+            request.getSession().setAttribute("trainers", ierc.getTrainer());
+            
+            response.sendRedirect("class.jsp");
         }
     }
 

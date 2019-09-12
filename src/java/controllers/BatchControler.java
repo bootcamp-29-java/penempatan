@@ -5,6 +5,8 @@
  */
 package controllers;
 
+
+import icontrollers.IBatchController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -16,7 +18,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class BatchControler {
+public class BatchControler implements IBatchController {
     private IGeneralDAO<Batch> igdao;
 
     public BatchControler(SessionFactory factory) {
@@ -24,14 +26,17 @@ public class BatchControler {
     }
     
     
+    @Override
     public List<Batch> getall(){
         return igdao.getAll();
     }
     
+    @Override
     public Batch getById(String id){
         return igdao.getById(id);
     }
     
+    @Override
     public String save(String id){
         String result = "";
         Batch batch = new Batch(id);

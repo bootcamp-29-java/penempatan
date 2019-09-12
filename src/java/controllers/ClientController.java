@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IClientController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -15,21 +16,24 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class ClientController {
+public class ClientController implements IClientController {
     private IGeneralDAO<Client> igdao;
 
     public ClientController(SessionFactory factory) {
         igdao = new GeneralDAO<>(factory,Client.class);
     }
     
+    @Override
     public List<Client> getall(){
         return igdao.getAll();
     }
     
+    @Override
     public Client getById(String id){
         return igdao.getById(id);
     }
     
+    @Override
     public String save(String id, String name, String location){
         String result = "";
         Client client = new Client(id, name, location);

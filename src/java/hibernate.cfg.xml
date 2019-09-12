@@ -50,8 +50,15 @@ Contributor(s):
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping class="models.Account"/>
+    <mapping class="models.Batch"/>
+    <mapping class="models.Class"/>
+    <mapping class="models.Client"/>
     <mapping class="models.Employee"/>
     <mapping class="models.EmployeeRole"/>
+    <mapping class="models.Interview"/>
+    <mapping class="models.Lesson"/>
+    <mapping class="models.Participant"/>
+    <mapping class="models.Placement"/>
     <mapping class="models.Role"/>
     <mapping class="models.Status"/>
   </session-factory>

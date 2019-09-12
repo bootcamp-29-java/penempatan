@@ -21,8 +21,8 @@ import tools.HibernateUtil;
  *
  * @author Lenovo
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
+@WebServlet(name = "EmployeeServlet1", urlPatterns = {"/employeeservlet1"})
+public class EmployeeServlet1 extends HttpServlet {
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
     private IEmployeeController iec = new EmployeeController(factory);
@@ -42,7 +42,7 @@ public class EmployeeServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("employees", iec.getAll());
             request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("employee.jsp");
         }
     }
 

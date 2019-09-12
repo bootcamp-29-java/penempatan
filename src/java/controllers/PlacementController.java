@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IPlacementController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class PlacementController {
+public class PlacementController implements IPlacementController {
     IGeneralDAO<Placement> igdao;
     IGeneralDAO<Participant>pardao;
     IGeneralDAO<Client>cldao;
@@ -31,10 +32,12 @@ public class PlacementController {
         cldao = new GeneralDAO<>(factory,Client.class);
     }
     
+    @Override
     public List<Placement> getAll(){
         return igdao.getAll();
     }
     
+    @Override
     public Placement getById(String id)
     {
         return igdao.getById(id);

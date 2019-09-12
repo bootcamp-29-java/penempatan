@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IRoleController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -15,21 +16,24 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class RoleController {
+public class RoleController implements IRoleController {
     IGeneralDAO<Role> igdao;
 
     public RoleController(SessionFactory factory) {
         igdao = new GeneralDAO<>(factory,Role.class);
     }
     
+    @Override
     public List<Role> getAll(){
         return igdao.getAll();
     }
     
+    @Override
     public Role geyById(String id){
         return igdao.getById(id);
     }
     
+    @Override
     public String save(String id, String name){
         String result = "";
         Role role = new Role(id, name);

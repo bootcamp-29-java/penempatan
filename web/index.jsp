@@ -15,6 +15,7 @@
     String status = (String) session.getAttribute("status2");
     out.print(status);
     if (logSession == null) {
+        out.print(logSession);
         out.println("<script>alert('Anda belum login!')</script>");
         out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
     } else if (employees == null) {

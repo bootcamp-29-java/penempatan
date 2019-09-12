@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IInterviewController;
 import com.mysql.jdbc.Util;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
@@ -23,7 +24,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class InterviewController {
+public class InterviewController implements IInterviewController {
     IGeneralDAO<Interview> igdao;
     IGeneralDAO<Client> cldao;
     IGeneralDAO<Participant> prdao;
@@ -34,10 +35,12 @@ public class InterviewController {
         prdao = new GeneralDAO<>(factory,Participant.class);
     }
     
+    @Override
     public List<Interview> getAll(){
         return igdao.getAll();
     }
     
+    @Override
     public Interview getById(String id){
         return igdao.getById(id);
     }

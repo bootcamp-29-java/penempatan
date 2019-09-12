@@ -4,9 +4,22 @@
     Author     : ASUS
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="models.Class"%>
+<%@page import="models.Participant"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file = "header.jsp" %>
 <!DOCTYPE html>
+
+<%
+    List<Participant> participants = (List<Participant>) session.getAttribute("participants");
+    List<Class> classes = (List<Class>) session.getAttribute("classes");
+
+    if (participants == null) {
+        response.sendRedirect("participantservlet");
+    } else {
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,32 +34,57 @@
     </head>
 
     <body>
-        
-
-        <!--coba-->
-        
-
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Participant</h1>
-                    </div>
-                    <div class="container">
-                        <div class="card w-100" style="margin-top: 20px;">
-                            <h5 class="card-header">Create Participant</h5>
-                            <div class="card-body">
-                                <h5 class="card-title">Input New Participant</h5>
-                                <p class="card-text">You can input new participant data in here</p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
-                                    Add Participant    
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-
+        <!--card atas-->
+        <div class="container">
+            <div class="card w-100" style="margin-top: 20px;">
+                <h5 class="card-header">Create Participant</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Input New Participant</h5>
+                    <p class="card-text">You can input new participant data in here</p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
+                        Add Participant    
+                    </button>
+                </div>
+            </div><br>
+             <div class="card w-100">
+            <h5 class="card-header">List Participant</h5>
+            <div class="card-body">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Participant empl : participants) {
+                        %>
+                        <tr>
+                            <td scope="row"><%=empl.getId()%></td>
+                            <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
+                            <td scope="row"><%=(empl.getGrade() == null) ? "" : empl.getGrade()%></td>
+                            <td scope="row"><%=(empl.getClass1() == null) ? "" : empl.getClass1().getId()%></td>
+                            <td>
+                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    EDIT</button>
+                            </td>
+                            <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <!--DATA TABLE HERE-->
             </div>
-        </div>
-        <!--coba-->
+             </div></div>
+        <!--card atas-->
+        <!--table here-->
 
         <div class="modal fade" id="addParticipant" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -69,16 +107,21 @@
                                 <div class="form-group col-md-12">
                                     <label for="inputGrade">Grade</label>
                                     <select id="grade" name="grade" class="form-control">
-                                        <option selected=""></option>
-                                        <option></option>
+                                        <option value="">-Pilih-</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
                                     </select>
                                 </div>
 
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Class</label>
-                                <select id="provinsi" name="provinsi" class="form-control">
-                                    <option ></option>
+                                <select id="class" name="class" class="form-control">
+                                    <option value="">-Pilih-</option>
+                                    <%for (Class c : classes) { %>
+                                    <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getTrainer()%></option>
+                                    <% } %>
                                 </select>
                             </div>
 
@@ -93,14 +136,25 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#provinsi').select2({
+                $('#class').select2({
                     placeholder: 'Class',
                     allowClear: true
                 });
             });
         </script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
     </body>
+
 </html>
+<%
+    }
+%>

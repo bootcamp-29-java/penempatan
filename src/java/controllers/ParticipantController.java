@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IParticiantController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class ParticipantController {
+public class ParticipantController implements IParticiantController {
     IGeneralDAO<Participant> igdao;
     IGeneralDAO<Employee>empdao;
     IGeneralDAO<Class>cladao;
@@ -28,10 +29,12 @@ public class ParticipantController {
         cladao = new GeneralDAO<>(factory,Class.class);
     }
         
+    @Override
     public List<Participant> getAll(){
         return igdao.getAll();
     }
     
+    @Override
     public Participant getById(String id){
         return igdao.getById(id);
     }

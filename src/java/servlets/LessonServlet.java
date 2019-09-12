@@ -5,8 +5,8 @@
  */
 package servlets;
 
-import controllers.EmployeeController;
-import icontrollers.IEmployeeController;
+import controllers.LessonController;
+import icontrollers.ILessonController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,14 +19,14 @@ import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
+@WebServlet(name = "LessonServlet", urlPatterns = {"/lessonservlet"})
+public class LessonServlet extends HttpServlet {
+
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
-
+    private ILessonController ilc = new LessonController(factory);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,9 +40,8 @@ public class EmployeeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("employees", iec.getAll());
-            request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+            request.getSession().setAttribute("lessons", ilc.getall());
+            response.sendRedirect("lesson.jsp");
         }
     }
 

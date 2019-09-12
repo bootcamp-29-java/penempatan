@@ -5,8 +5,11 @@
  */
 package servlets;
 
-import controllers.EmployeeController;
-import icontrollers.IEmployeeController;
+import controllers.ParticipantController;
+import daos.GeneralDAO;
+import icontrollers.IParticiantController;
+import models.Class;
+import idaos.IGeneralDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,14 +22,15 @@ import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
+@WebServlet(name = "ParticipantServlet", urlPatterns = {"/participantservlet"})
+public class ParticipantServlet extends HttpServlet {
+
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
-
+    private IParticiantController ipc = new ParticipantController(factory);
+    private IGeneralDAO<Class> igdao = new GeneralDAO<>(factory, Class.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,9 +44,9 @@ public class EmployeeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("employees", iec.getAll());
-            request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+            request.getSession().setAttribute("participants", ipc.getAll());
+            request.getSession().setAttribute("classes", igdao.getAll());
+            response.sendRedirect("participant.jsp");
         }
     }
 

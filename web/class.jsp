@@ -1,4 +1,23 @@
+<%@page import="models.EmployeeRole"%>
+<%@page import="models.Lesson"%>
+<%@page import="models.Batch"%>
+<%@page import="models.Class"%>
+<%@page import="java.util.List"%>
 <%@include file = "header.jsp" %>
+<%
+    List<Class> cl = (List<Class>) session.getAttribute("Kelass");
+    List<Batch> bc = (List<Batch>) session.getAttribute("Batchs");
+    List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
+    List<EmployeeRole> trainers = (List<EmployeeRole>) session.getAttribute("trainers");
+    
+    
+    if(cl == null || bc == null){
+        response.sendRedirect("classservlet");
+    }
+    else{
+        
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,11 +32,7 @@
     </head>
 
     <body>
-             <!--coba-->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Class and Batch</h1>
-                    </div>
+             <!--card atas-->
                     <div class="container">
                         <div class="card w-100" style="margin-top: 20px;">
                             <h5 class="card-header">Create Class and Batch</h5>
@@ -32,12 +47,73 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="card w-100">
+                <h5 class="card-header">List Employee Role</h5>
+                <div class="card-body">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Lesson</th>
+                                <th scope="col">Batch</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                for (Class empl : cl) {
+                            %>
+                            <tr>
+                                <td scope="row"><%=empl.getId()%></td>
+                                <td scope="row"><%=empl.getLesson().getName()%></td>
+                                <td scope="row"><%=empl.getBatch().getId()%></td>
+                                <td>
+                                    <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                        EDIT</button>
+                                </td>
+                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            
+                        </tbody>
                     </div>
-                </main>
-
-            </div>
-        </div>
-        <!--coba-->
+                            
+                            <div class="card w-100">
+                <h5 class="card-header">List Employee Role</h5>
+                <div class="card-body">
+                    <table id="examplee" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                for (Batch empl : bc) {
+                            %>
+                            <tr>
+                                <td scope="row"><%=empl.getId()%></td>
+                                <td>
+                                    <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                        EDIT</button>
+                                </td>
+                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            
+                        </tbody>
+                    </div>
+             <!--card atas-->
+             
+             <!--table here-->
+                
 
         <div class="modal fade" id="addClass"  role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -59,18 +135,27 @@
                                <!--lesson-->
                                 <select id="lesson" name="lesson" class="form-control">
                                     <option ></option>
+                                    <%for (Lesson l : lessons) { %>
+                                    <option value="<%=l.getId()%>" ><%=l.getId()%> - <%=l.getName()%></option>
+                                    <% } %>
                                 </select>
                           
                                 
                                 <!--batch-->
                                 <select id="batch" name="batch" class="form-control">
                                     <option ></option>
+                                    <%for (Batch b : bc) { %>
+                                    <option value="<%=b.getId()%>" ><%=b.getId()%></option>
+                                    <% } %>
                                 </select>
                            
                                 
                                 <!--trainer-->
                                 <select id="trainer" name="trainer" class="form-control">
                                     <option ></option>
+                                    <%for (EmployeeRole t : trainers) { %>
+                                    <option value="<%=t.getId()%>" ><%=t.getId()%> - <%=t.getEmployee().getFirstName()%></option>
+                                    <% } %>
                                 </select>
                             </div>
                                
@@ -136,7 +221,24 @@
                 });
             });
         </script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#examplee').DataTable();
+        });
+    </script>
+
 </body>
 </html>
+<%
+  }  
+%>

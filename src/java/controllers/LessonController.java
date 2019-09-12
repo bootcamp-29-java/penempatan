@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.ILessonController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -16,7 +17,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class LessonController {
+public class LessonController implements ILessonController {
     
     IGeneralDAO<Lesson>igdao;
 
@@ -24,14 +25,17 @@ public class LessonController {
         igdao = new GeneralDAO<>(factory,Lesson.class);
     }
     
+    @Override
     public List<Lesson> getall(){
         return igdao.getAll();
     }
     
+    @Override
     public Lesson getById(String id){
         return igdao.getById(id);
     }
     
+    @Override
     public String save(String id, String name){
         String result = "";
         Lesson lesson = new Lesson(id, name);

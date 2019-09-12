@@ -1,4 +1,15 @@
+<%@page import="models.Client"%>
+<%@page import="java.util.List"%>
 <%@include file = "header.jsp" %>
+
+<%
+    List<Client> cli = (List<Client>) session.getAttribute("Clients");
+
+    if (cli == null) {
+        response.sendRedirect("clientservlet");
+    } else {
+
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,65 +21,96 @@
     </head>
 
     <body>
-        <!--coba-->
-       
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Client</h1>
-                    </div>
-                      <div class="container">
-                        <div class="card w-100" style="margin-top: 20px;">
-                            <h5 class="card-header">Create Client</h5>
-                            <div class="card-body">
-                                <h5 class="card-title">Input Client</h5>
-                                <p class="card-text">You can input new client data in here</p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClient">
-                                    Add Client    
-                                </button>
+        <!--card atas-->
+        <div class="container">
+            <div class="card w-100" style="margin-top: 20px;">
+                <h5 class="card-header">Create Client</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Input Client</h5>
+                    <p class="card-text">You can input new client data in here</p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClient">
+                        Add Client    
+                    </button>
+                </div>
+            </div>
+            <h5 class="card-header">List Employee Role</h5>
+            <div class="card-body">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%                            
+                            for (Client empl : cli) {
+                        %>
+                        <tr>
+                            <td scope="row"><%=empl.getId()%></td>
+                            <td scope="row"><%=empl.getName()%></td>
+                            <td>
+                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    EDIT</button>
+                            </td>
+                            <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </div> 
+                        <!--card atas-->
+
+                        <!--table here-->
+
+                    <div class="modal fade" id="addClient" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Create Client</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="inputDI">ID</label>
+                                                <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label for="inputName">Name</label>
+                                                <input type="text" class="form-control" id="class" name="name" placeholder="Name" value="">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label for="inputLocation">Location</label>
+                                                <input type="text" class="form-control" id="class" name="location" placeholder="Location" value="">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Add Client</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </main>
 
-            </div>
-        </div>
-        <!--coba-->
-        
-        <div class="modal fade" id="addClient" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Client</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputDI">ID</label>
-                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Name</label>
-                                    <input type="text" class="form-control" id="class" name="name" placeholder="Name" value="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputLocation">Location</label>
-                                    <input type="text" class="form-control" id="class" name="location" placeholder="Location" value="">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Add Client</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    </body>
-</html>
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#example').DataTable();
+                        });
+                    </script>
+                    </body>
+                    </html>
+                    <%
+                        }
+                    %>

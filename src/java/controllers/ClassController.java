@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import icontrollers.IClassController;
 import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.util.List;
@@ -18,7 +19,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Reza
  */
-public class ClassController {
+public class ClassController implements IClassController {
     private IGeneralDAO<Class> igdao;
     private IGeneralDAO<Lesson> lessdao;
     private IGeneralDAO<Batch> batdao;
@@ -33,14 +34,17 @@ public class ClassController {
         
     }
     
+    @Override
     public List<Class> getall(){
         return igdao.getAll();
     }
     
+    @Override
     public Class getById(String id){
         return igdao.getById(id);
     }
     
+    @Override
     public String save(String id, String lesson, String batch, String trainer){
         String result = "";
         Class classes = new Class();
@@ -67,7 +71,7 @@ public class ClassController {
         
         return result;
     }
-    
+  
     public String delete(String id){
         String result = "";
         Class kelas = new Class(id);
