@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file = "header.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,113 +18,8 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="curriculum-vitae.jsp">CV</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="assessment.jsp">Assessment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.jsp">Placement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="asset-management.jsp">Asset Management</a>
-                    </li>
-                </ul>
-            </div>
-            <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-danger my-2 my-sm-0" type="submit" onclick="window.location.href = 'login.jsp';">Logout</button>
-            </form> 
-        </nav>
-
+      
         <!--coba-->
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span>Data Employee</span>
-                            </h6>
-                            <li class="nav-item">
-                                <a class="nav-link" href="employee.jsp">
-                                    <span data-feather="file"></span>
-                                    Employee
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="role.jsp">
-                                    <span data-feather="shopping-cart"></span>
-                                    Employee Role
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="participant.jsp">
-                                    <span data-feather="users"></span>
-                                    Participant
-                                </a>
-                            </li>
-                        </ul>
-
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Interview and Placement</span>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link" href="interview.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Interview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="placement.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Placement
-                                </a>
-                            </li>
-                        </ul>
-
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Data Class</span>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link" href="lesson.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Lesson
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="class.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Class and Batch
-                                </a>
-                            </li>
-
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span>Data Client</span>
-                            </h6>
-                            <li class="nav-item">
-                                <a class="nav-link" href="client.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Client
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Employee Role</h1>

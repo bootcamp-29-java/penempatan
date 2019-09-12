@@ -4,8 +4,22 @@
     Author     : ASUS
 --%>
 
+<%@page import="models.Employee"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file = "header.jsp" %>
 <!DOCTYPE html>
+
+<%
+    String employeeId = (String) session.getAttribute("employeeId");
+    List<Employee> employees = (List<Employee>) session.getAttribute("employees");
+    String status = (String) session.getAttribute("status2");
+    out.print(status);
+    if (employees == null) {
+        response.sendRedirect("employeeservlet");
+    } else {
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,112 +31,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="curriculum-vitae.jsp">CV</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="assessment.jsp">Assessment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.jsp">Placement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="asset-management.jsp">Asset Management</a>
-                    </li>
-                </ul>
-            </div>
-            <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-danger my-2 my-sm-0" type="submit" onclick="window.location.href = 'login.jsp';">Logout</button>
-            </form>
-        </nav>  
-
-
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span>Data Employee</span>
-                            </h6>
-                            <li class="nav-item">
-                                <a class="nav-link" href="employee.jsp">
-                                    <span data-feather="file"></span>
-                                    Employee
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="role.jsp">
-                                    <span data-feather="shopping-cart"></span>
-                                    Employee Role
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="participant.jsp">
-                                    <span data-feather="users"></span>
-                                    Participant
-                                </a>
-                            </li>
-                        </ul>
-
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Interview and Placement</span>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link" href="interview.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Interview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="placement.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Placement
-                                </a>
-                            </li>
-                        </ul>
-
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Data Class</span>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link" href="lesson.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Lesson
-                                </a>
-                            </li>
-                           
-                            <li class="nav-item">
-                                <a class="nav-link" href="class.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Class and Batch
-                                </a>
-                            </li>
-
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span>Data Client</span>
-                            </h6>
-                            <li class="nav-item">
-                                <a class="nav-link" href="client.jsp">
-                                    <span data-feather="file-text"></span>
-                                    Client
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+       
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Employee</h1>
@@ -132,9 +41,9 @@
                         <div class="card w-100" style="margin-top: 20px;">
                             <h5 class="card-header">Add Employee</h5>
                             <div class="card-body">
-                                 <h5 class="card-title">Input New Employee</h5>
+                                <h5 class="card-title">Input New Employee</h5>
                                 <p class="card-text">You can input new Employee data in here</p>
-                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
                                     Add Employee
                                 </button>
                             </div>
@@ -145,7 +54,43 @@
 
             </div>
         </div>
+        <h5 class="card-header">List Employee Account</h5>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Birth Place</th>
+                        <th scope="col">Birth Date</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Nationality</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for (Employee empl : employees) {
+                    %>
+                    <tr>
+                        <td scope="row"><%=empl.getFirstName()%></td>
+                        <td scope="row"><%=empl.getLastName()%></td>
+                        <td scope="row"><%=empl.getEmail()%></td>
+                        <td scope="row"><%=empl.getBirthPlace()%></td>
+                        <td scope="row"><%=empl.getBirthDate()%></td>
+                        <td scope="row"><%=empl.getGender()%></td>
+                        <td scope="row"><%=empl.getNationality()%></td>
+                        <td scope="row"><%=empl.getPhoto()%></td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </tbody>
+            </table>
+            <!--DATA TABLE HERE-->
+        </div>
 
+        <!--Modal-->
         <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
@@ -226,3 +171,6 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>
+<%
+    }
+%>

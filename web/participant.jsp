@@ -21,23 +21,23 @@
     </head>
 
     <body>
-       
+        
 
         <!--coba-->
         
 
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Placement</h1>
+                        <h1 class="h2">Participant</h1>
                     </div>
                     <div class="container">
                         <div class="card w-100" style="margin-top: 20px;">
-                            <h5 class="card-header">Create Placement</h5>
+                            <h5 class="card-header">Create Participant</h5>
                             <div class="card-body">
-                                <h5 class="card-title">Input New Placement</h5>
-                                <p class="card-text">You can input new placement data in here</p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement">
-                                    Add Placement   
+                                <h5 class="card-title">Input New Participant</h5>
+                                <p class="card-text">You can input new participant data in here</p>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
+                                    Add Participant    
                                 </button>
                             </div>
                         </div>
@@ -47,11 +47,12 @@
             </div>
         </div>
         <!--coba-->
-        <div class="modal fade" id="addPlacement" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+
+        <div class="modal fade" id="addParticipant" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Placement</h5>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Participant</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -63,38 +64,27 @@
                                     <label for="inputID">ID</label>
                                     <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputStartDate">Start Date</label>
-                                    <input type="date" class="form-control" id="startdate" name="startdate">
+
+
+                                <div class="form-group col-md-12">
+                                    <label for="inputGrade">Grade</label>
+                                    <select id="grade" name="grade" class="form-control">
+                                        <option selected=""></option>
+                                        <option></option>
+                                    </select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputEndDate">End Date</label>
-                                    <input type="date" class="form-control" id="lastName" name="enddate">
-                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="inputPosition">Position</label>
-                                <input type="text" class="form-control" id="position" name="postion" placeholder="Position">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputDepartment">Department</label>
-                                <input type="text" class="form-control" id="department" name="department" placeholder="Department">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputGender">Participant</label>
+                            <div class="form-group col-md-12">
+                                <label>Class</label>
                                 <select id="provinsi" name="provinsi" class="form-control">
                                     <option ></option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="inputNationality">Client</label>
-                                <select id="dor" name="provinsi" class="form-control">
-                                    <option ></option>
-                                </select>
-                            </div>
+
                             <div class="modal-footer">
 
-                                <button type="submit" class="btn btn-primary">Add Placement</button>
+                                <button type="submit" class="btn btn-primary">Add Participant</button>
                             </div>
                         </form>
                     </div>
@@ -104,19 +94,12 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#provinsi').select2({
-                    placeholder: 'Participant',
+                    placeholder: 'Class',
                     allowClear: true
                 });
             });
         </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#dor').select2({
-                    placeholder: 'Client',
-                    allowClear: true
-                });
-            });
-        </script>
+
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </body>
