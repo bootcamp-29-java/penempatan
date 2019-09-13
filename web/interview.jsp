@@ -43,12 +43,13 @@
                 <div class="card-body">
                     <h5 class="card-title">Input New Interview</h5>
                     <p class="card-text">You can input new interview data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addInterview">
+                    <button type="button" onclick="getData('','','','','','','','')" class="btn btn-primary" data-toggle="modal" data-target="#addInterview">
                         Add Interview  
                     </button>
                 </div>
             </div>
         </div>
+        <br>
         <div class="card w-100">
             <h5 class="card-header">List Employee Role</h5>
             <div class="card-body">
@@ -56,7 +57,8 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Date Time</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
                             <th scope="col">Location</th>
                             <th scope="col">Department</th>
                             <th scope="col">PIC</th>
@@ -72,14 +74,16 @@
                         %>
                         <tr>
                             <td scope="row"><%=empl.getId()%></td>
-                            <td scope="row"><%=empl.getDateTime()%></td>
+                            <td scope="row"><%=empl.getDate()%></td>
+                            <td scope="row"><%=empl.getTime()%></td>
                             <td scope="row"><%=empl.getLocation()%></td>
                             <td scope="row"><%=empl.getDepartment()%></td>
                             <td scope="row"><%=empl.getPic()%></td>
                             <td scope="row"><%=empl.getParticipant().getEmployee().getFirstName()%></td>
                             <td scope="row"><%=empl.getClient().getName()%></td>
                             <td>
-                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button onclick="getData('<%=empl.getId()%>','<%=empl.getDate()%>','<%=empl.getTime()%>','<%=empl.getLocation()%>','<%=empl.getDepartment()%>',
+                                            '<%=empl.getPic()%>','<%=empl.getParticipant().getId()%>','<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addInterview">
                                     EDIT</button>
                             </td>
                             <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -114,12 +118,14 @@
                                     <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
                                 </div>
                             </div>
-
                             <div class="form-group ">
-                                <label>Date Time</label>
-                                <input type="date" class="form-control" id="firstName" name="firstName">
+                                <label>Date</label>
+                                <input type="date" class="form-control" id="date" name="firstName">
                             </div>
-
+                            <div class="form-group ">
+                                <label>Time</label>
+                                <input type="time" class="form-control" id="time" name="firstName">
+                            </div>
                             <div class="form-group">
                                 <label for="inputLocation">Location</label>
                                 <input type="text" class="form-control" id="location" name="location" placeholder="">
@@ -135,7 +141,7 @@
 
                             <div class="form-group">
                                 <label for="inputGender">Participant</label>
-                                <select id="provinsi" name="provinsi" class="form-control">
+                                <select id="participant" name="provinsi" class="form-control">
                                     <option value="">-Pilih-</option>
                                     <%for (Participant p : participants) { %>
                                     <option value="<%=p.getId()%>" ><%=p.getId()%> - <%=p.getEmployee().getFirstName()%></option>
@@ -144,7 +150,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputNationality">Client</label>
-                                <select id="dor" name="provinsi" class="form-control">
+                                <select id="client" name="provinsi" class="form-control">
                                     <option ></option>
                                     <%for (Client c : clients) { %>
                                     <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getName()%></option>
@@ -163,7 +169,7 @@
             </div>
         </div>
 
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
             $(document).ready(function () {
                 $('#provinsi').select2({
                     placeholder: 'Participant',
@@ -178,12 +184,30 @@
                     allowClear: true
                 });
             });
-        </script>
+        </script>-->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            function getData(id, date, time, location,department, pic, participant, client) {
+                document.getElementById("id").value = id;
+                document.getElementById("date").value = date;
+                document.getElementById("time").value = time;
+                document.getElementById("location").value = location;
+                document.getElementById("department").value = department;
+                document.getElementById("pic").value = pic;
+                document.getElementById("participant").value = participant;
+                document.getElementById("client").value = client;
+ 
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+            </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable();

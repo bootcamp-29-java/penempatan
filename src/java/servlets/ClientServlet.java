@@ -62,6 +62,20 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("client_id");
+        String name = request.getParameter("client_name");
+        String loc = request.getParameter("client_loc");
+        status = cli.save(id, name, loc);
+        if(status.equalsIgnoreCase("Data Berhasil Disimpan")){
+            request.getSession().setAttribute("status", status);
+            request.getSession().setAttribute("cli_name", name);
+            System.out.println(status);
+        }
+        else{
+            request.getSession().setAttribute("status",status);
+           // response.sendRedirect("client.jsp");
+        }
+
         processRequest(request, response);
     }
 

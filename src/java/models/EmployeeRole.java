@@ -22,13 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
 @Entity
 @Table(name = "tb_tr_employee_role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EmployeeRole.findAll", query = "SELECT e FROM EmployeeRole e")})
+    @NamedQuery(name = "EmployeeRole.findAll", query = "SELECT e FROM EmployeeRole e")
+    , @NamedQuery(name = "EmployeeRole.findById", query = "SELECT e FROM EmployeeRole e WHERE e.id = :id")})
 public class EmployeeRole implements Serializable {
 
     private static final long serialVersionUID = 1L;

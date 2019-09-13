@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Role
-    Created on : Sep 11, 2019, 10:50:24 PM
-    Author     : ASUS
---%>
-
 <%@page import="models.Employee"%>
 <%@page import="models.Role"%>
 <%@page import="models.EmployeeRole"%>
@@ -49,6 +43,7 @@
                 </div>
             </div>
             <br>
+           
             <div class="card w-100">
                 <h5 class="card-header">List Employee Role</h5>
                 <div class="card-body">
@@ -73,7 +68,7 @@
                                 <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
                                 <td scope="row"><%=empl.getRole().getName()%></td>
                                 <td>
-                                    <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    <button onclick="getData('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
                                         EDIT</button>
                                 </td>
                                 <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -86,8 +81,11 @@
                     <!--DATA TABLE HERE-->
                 </div>
             </div>
+                        
+            <br>
+            
             <div class="card w-100">
-                <h5 class="card-header">List Employee Role</h5>
+                <h5 class="card-header">List Role</h5>
                 <div class="card-body">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
@@ -106,7 +104,7 @@
                                 <td scope="row"><%=empl.getId()%></td>
                                 <td scope="row"><%=empl.getName()%></td>
                                 <td>
-                                    <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    <button onclick="getDataRole('<%=empl.getId()%>', '<%=empl.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
                                         EDIT</button>
                                 </td>
                                 <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -201,15 +199,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="registerservlet" method="POST">
+                        <form action="roleservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
-                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                    <input type="number" class="form-control" id="idRole" name="role_id" placeholder="ID" value="">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="inputName">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Role Nmae" value="">
+                                    <input type="text" class="form-control" id="nameRole" name="role_name" placeholder="Role Nmae" value="">
                                 </div>
 
                             </div>
@@ -230,7 +228,31 @@
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            function getData(id, employee, role) {
+                document.getElementById("id").value = id;
+                document.getElementById("employee").value = employee;
+                document.getElementById("role").value = role;
 
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+
+            function getDataRole(id, role) {
+                document.getElementById("idRole").value = id;
+                document.getElementById("nameRole").value = role;
+
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+
+        </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable();

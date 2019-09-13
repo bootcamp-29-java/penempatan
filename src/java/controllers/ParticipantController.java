@@ -46,6 +46,7 @@ public class ParticipantController implements IParticiantController {
         Class kelas = cladao.getById(classes);
         Participant participant = new Participant();
         try {
+            participant.setEmployee(employee);
             participant.setId(employee.getId());
             participant.setGrade(grade);
             participant.setClass1(kelas);

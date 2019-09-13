@@ -45,16 +45,18 @@ public class InterviewController implements IInterviewController {
         return igdao.getById(id);
     }
     
-    public String save(String id, String date_time, String location, String department,String pic,String is_accepted, String participant, String client){
+    public String save(String id, String date, String time, String location, String department,String pic,String is_accepted, String participant, String client){
         String reesult ="";
         
         Participant participant_1 = prdao.getById(participant);
         Client client_1=cldao.getById(client);
         try {
-            Date date= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(date_time);
+            Date dates= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(date);
+            Date times = new SimpleDateFormat("HH:mm:ss").parse(time);
             Interview interview = new Interview();
             interview.setId(id);
-            interview.setDateTime(date);
+            interview.setDate(dates);
+            interview.setTime(times);
             interview.setLocation(location);
             interview.setDepartment(department);
             interview.setPic(pic);

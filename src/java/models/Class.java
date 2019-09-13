@@ -6,6 +6,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,20 +16,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Reza
+ * @author ASUS
  */
 @Entity
 @Table(name = "tb_m_class")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Class.findAll", query = "SELECT c FROM Class c"),
-    @NamedQuery(name = "Class.findById", query = "SELECT c FROM Class c WHERE c.id = :id")})
+    @NamedQuery(name = "Class.findAll", query = "SELECT c FROM Class c")
+    , @NamedQuery(name = "Class.findById", query = "SELECT c FROM Class c WHERE c.id = :id")})
 public class Class implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -43,6 +47,8 @@ public class Class implements Serializable {
     @JoinColumn(name = "trainer", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employee trainer;
+    @OneToMany(mappedBy = "class1", fetch = FetchType.LAZY)
+    private List<Participant> participantList;
 
     public Class() {
     }
@@ -81,6 +87,15 @@ public class Class implements Serializable {
 
     public void setTrainer(Employee trainer) {
         this.trainer = trainer;
+    }
+
+    @XmlTransient
+    public List<Participant> getParticipantList() {
+        return participantList;
+    }
+
+    public void setParticipantList(List<Participant> participantList) {
+        this.participantList = participantList;
     }
 
     @Override

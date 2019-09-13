@@ -21,13 +21,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
 @Entity
 @Table(name = "tb_m_status")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s")})
+    @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s")
+    , @NamedQuery(name = "Status.findById", query = "SELECT s FROM Status s WHERE s.id = :id")
+    , @NamedQuery(name = "Status.findByName", query = "SELECT s FROM Status s WHERE s.name = :name")})
 public class Status implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -85,7 +85,9 @@ public class ResgisterServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String nationality = request.getParameter("nationality");
         String token = AllMethod.generateToken();
-        status = iec.save(id, firstName, lastName, email, birthPlace, birthDate, gender, nationality, email, false);
+        String religion = request.getParameter("religion");
+        String phone = request.getParameter("phone");
+        status = iec.save(id, firstName, lastName, email, birthPlace, birthDate, gender, nationality, "", religion, phone, false);
         if (status.equalsIgnoreCase("Save data berhasil")) {
             if (iac.createAccount(id, "", token, "-1", "").equalsIgnoreCase("Berhasil")) {
                 AllMethod.sendEmail(email, firstName+" "+lastName, token);

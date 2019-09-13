@@ -41,7 +41,6 @@ public class Participant implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private String id;
-    @Basic(optional = false)
     @Column(name = "grade")
     private String grade;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participant", fetch = FetchType.LAZY)
@@ -50,7 +49,7 @@ public class Participant implements Serializable {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Employee employee;
     @JoinColumn(name = "class", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Class class1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participant", fetch = FetchType.LAZY)
     private List<Placement> placementList;
@@ -60,11 +59,6 @@ public class Participant implements Serializable {
 
     public Participant(String id) {
         this.id = id;
-    }
-
-    public Participant(String id, String grade) {
-        this.id = id;
-        this.grade = grade;
     }
 
     public String getId() {

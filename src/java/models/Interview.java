@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Interview.findAll", query = "SELECT i FROM Interview i")
     , @NamedQuery(name = "Interview.findById", query = "SELECT i FROM Interview i WHERE i.id = :id")
-    , @NamedQuery(name = "Interview.findByDateTime", query = "SELECT i FROM Interview i WHERE i.dateTime = :dateTime")
+    , @NamedQuery(name = "Interview.findByDate", query = "SELECT i FROM Interview i WHERE i.date = :date")
+    , @NamedQuery(name = "Interview.findByTime", query = "SELECT i FROM Interview i WHERE i.time = :time")
     , @NamedQuery(name = "Interview.findByLocation", query = "SELECT i FROM Interview i WHERE i.location = :location")
     , @NamedQuery(name = "Interview.findByDepartment", query = "SELECT i FROM Interview i WHERE i.department = :department")
     , @NamedQuery(name = "Interview.findByPic", query = "SELECT i FROM Interview i WHERE i.pic = :pic")
@@ -44,9 +45,12 @@ public class Interview implements Serializable {
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
-    @Column(name = "date_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateTime;
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    @Column(name = "time")
+    @Temporal(TemporalType.TIME)
+    private Date time;
     @Basic(optional = false)
     @Column(name = "location")
     private String location;
@@ -72,14 +76,18 @@ public class Interview implements Serializable {
         this.id = id;
     }
 
-    public Interview(String id, Date dateTime, String location, String department, String pic) {
+    public Interview(String id, Date date, Date time, String location, String department, String pic, Boolean isAccepted, Participant participant, Client client) {
         this.id = id;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.department = department;
         this.pic = pic;
+        this.isAccepted = isAccepted;
+        this.participant = participant;
+        this.client = client;
     }
-
+    
     public String getId() {
         return id;
     }
@@ -88,12 +96,20 @@ public class Interview implements Serializable {
         this.id = id;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public String getLocation() {

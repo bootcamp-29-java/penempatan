@@ -23,19 +23,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Reza
+ * @author ASUS
  */
 @Entity
 @Table(name = "tb_tr_placement")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Placement.findAll", query = "SELECT p FROM Placement p"),
-    @NamedQuery(name = "Placement.findById", query = "SELECT p FROM Placement p WHERE p.id = :id"),
-    @NamedQuery(name = "Placement.findByStartDate", query = "SELECT p FROM Placement p WHERE p.startDate = :startDate"),
-    @NamedQuery(name = "Placement.findByEndDate", query = "SELECT p FROM Placement p WHERE p.endDate = :endDate"),
-    @NamedQuery(name = "Placement.findByPosition", query = "SELECT p FROM Placement p WHERE p.position = :position"),
-    @NamedQuery(name = "Placement.findByDepartment", query = "SELECT p FROM Placement p WHERE p.department = :department")})
+    @NamedQuery(name = "Placement.findAll", query = "SELECT p FROM Placement p")
+    , @NamedQuery(name = "Placement.findById", query = "SELECT p FROM Placement p WHERE p.id = :id")
+    , @NamedQuery(name = "Placement.findByStartDate", query = "SELECT p FROM Placement p WHERE p.startDate = :startDate")
+    , @NamedQuery(name = "Placement.findByEndDate", query = "SELECT p FROM Placement p WHERE p.endDate = :endDate")
+    , @NamedQuery(name = "Placement.findByPosition", query = "SELECT p FROM Placement p WHERE p.position = :position")
+    , @NamedQuery(name = "Placement.findByDepartment", query = "SELECT p FROM Placement p WHERE p.department = :department")})
 public class Placement implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)

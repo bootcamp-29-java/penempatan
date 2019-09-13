@@ -24,13 +24,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
 @Entity
 @Table(name = "tb_m_account")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")})
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
+    , @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id")
+    , @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password")
+    , @NamedQuery(name = "Account.findByToken", query = "SELECT a FROM Account a WHERE a.token = :token")
+    , @NamedQuery(name = "Account.findByVerifTime", query = "SELECT a FROM Account a WHERE a.verifTime = :verifTime")})
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -18,6 +18,6 @@ public interface IInterviewController {
 
     Interview getById(String id);
 
-    String save(String id, String date_time, String location, String department, String pic, String is_accepted, String participant, String client);
+    String save(String id, String date, String time, String location, String department, String pic, String is_accepted, String participant, String client);
     
 }

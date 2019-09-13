@@ -77,6 +77,31 @@ public class ClassServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String batch_id = request.getParameter("batch_id");
+        String trainer_id = request.getParameter("trainer_id");
+        String lesson_id = request.getParameter("lesson_id");
+        String kelas_id = lesson_id+"/"+batch_id;
+        
+        if (batch_id!= "" && lesson_id=="") {
+            status = ib.save(batch_id);
+            request.getSession().setAttribute("status",status);
+            //request.getSession().setAttribute("batch_name", batch_id);
+            response.sendRedirect("class.jsp");
+            System.out.println(status);
+            request.removeAttribute(status);
+        }
+       else if (!"".equals(lesson_id)){
+            status = ican.save(lesson_id+"/"+batch_id, lesson_id, batch_id, trainer_id);
+            request.getSession().setAttribute("status",status);
+            //request.getSession().setAttribute("kelas_name", kelas_id);
+            System.out.println(status);
+            request.removeAttribute(status);
+        }
+        else{
+            request.getSession().setAttribute("status",status);
+            response.sendRedirect("class.jsp");
+        }
+        
         processRequest(request, response);
     }
 

@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input New Placement</h5>
                     <p class="card-text">You can input new placement data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement">
+                    <button type="button" onclick="getData('','','','','','','','','')" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement">
                         Add Placement   
                     </button>
                 </div>
@@ -76,8 +76,10 @@
                             <td scope="row"><%=(empl.getEndDate() == null) ? "" : empl.getEndDate()%></td>
                             <td scope="row"><%=(empl.getPosition() == null) ? "" : empl.getPosition()%></td>
                             <td scope="row"><%=(empl.getDepartment() == null) ? "" : empl.getDepartment()%></td>
-                            <td>
-                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            <td> 
+                                <button onclick="getData('<%=empl.getId()%>', '<%=(empl.getStartDate() == null) ? "" : empl.getStartDate()%>',
+                                                '<%=(empl.getEndDate() == null) ? "" : empl.getEndDate()%>', '<%=(empl.getPosition() == null) ? "" : empl.getPosition()%>', '<%=(empl.getDepartment() == null) ? "" : empl.getDepartment()%>',
+                                                 '<%=empl.getParticipant().getId()%>','<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement ">
                                     EDIT</button>
                             </td>
                             <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -112,11 +114,11 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputStartDate">Start Date</label>
-                                    <input type="date" class="form-control" id="startdate" name="startdate">
+                                    <input type="date" class="form-control" id="startDate" name="startdate">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputEndDate">End Date</label>
-                                    <input type="date" class="form-control" id="lastName" name="enddate">
+                                    <input type="date" class="form-control" id="endDate" name="enddate">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,18 +131,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputGender">Participant</label>
-                                <select id="provinsi" name="provinsi" class="form-control">
+                                <select id="participant" name="provinsi" class="form-control">
                                     <option value="">-Pilih-</option>
-                                    <%for (Participant p : participants) { %>
+                                    <%for (Participant p : participants) {%>
                                     <option value="<%=p.getId()%>" ><%=p.getId()%> - <%=p.getEmployee().getFirstName()%></option>
                                     <% } %>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="inputNationality">Client</label>
-                                <select id="dor" name="provinsi" class="form-control">
-                                    <option ></option>
-                                    <%for (Client c : clients) { %>
+                                <select id="client" name="provinsi" class="form-control">
+                                    <option value="">-Pilih-</option>
+                                    <%for (Client c : clients) {%>
                                     <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getName()%></option>
                                     <% } %>
                                 </select>
@@ -154,27 +156,44 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#provinsi').select2({
-                    placeholder: 'Participant',
-                    allowClear: true
-                });
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#dor').select2({
-                    placeholder: 'Client',
-                    allowClear: true
-                });
-            });
-        </script>
+        <!--        <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#provinsi').select2({
+                            placeholder: 'Participant',
+                            allowClear: true
+                        });
+                    });
+                </script>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#dor').select2({
+                            placeholder: 'Client',
+                            allowClear: true
+                        });
+                    });
+                </script>-->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+                                   function getData(id, startDate, endDate, position, department, participant, client) {
+                                       document.getElementById("id").value = id;
+                                       document.getElementById("startDate").value = startDate;
+                                       document.getElementById("endDate").value = endDate;
+                                       document.getElementById("position").value = position;
+                                       document.getElementById("department").value = department;
+                                       document.getElementById("participant").value = participant;
+                                       document.getElementById("client").value = client;
+
+                                       if (id !== '') {
+                                           document.getElementById("id").readOnly = true;
+                                       } else {
+                                           document.getElementById("id").readOnly = false;
+                                       }
+                                   }
+        </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable();

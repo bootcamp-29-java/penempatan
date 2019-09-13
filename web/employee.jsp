@@ -46,7 +46,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input Employee</h5>
                     <p class="card-text">You can input employee data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                    <button type="button" class="btn btn-primary" onclick="getData('','','','','','','','','','','')" data-toggle="modal" data-target="#addEmployee">
                         Add Employee
                     </button>
                 </div>
@@ -69,6 +69,8 @@
                             <th scope="col">Gender</th>
                             <th scope="col">Nationality</th>
                             <th scope="col">Photo</th>
+                            <th scope="col">Religion</th>
+                            <th scope="col">Phone Number</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -87,8 +89,11 @@
                             <td scope="row"><%=empl.getGender()%></td>
                             <td scope="row"><%=empl.getNationality()%></td>
                             <td scope="row"><%=empl.getPhoto()%></td>
+                            <td scope="row"><%=empl.getReligion()%></td>
+                            <td scope="row"><%=empl.getPhone()%></td>
                             <td>
-                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button onclick="getData('<%=empl.getId()%>', '<%=empl.getFirstName()%>','<%=empl.getLastName()%>','<%=empl.getEmail()%>','<%=empl.getPhone()%>','<%=empl.getBirthPlace()%>','<%=empl.getBirthDate()%>','<%=empl.getGender()%>'
+                                    ,'<%=empl.getNationality()%>','<%=empl.getPhoto()%>','<%=empl.getReligion()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
                                     EDIT</button>
                             </td>
                             <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -174,6 +179,8 @@
                                 <option value="Budha">Budha</option>
                             </select>
                         </div>
+                        
+
 
                         <div class="modal-footer">
 
@@ -189,6 +196,27 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script>
+            function getData(id, firstName, lastName, email, phone, birthPlace, birthDate, gender, nationality, photo, religion) {
+                document.getElementById("id").value = id;
+                document.getElementById("firstName").value = firstName;
+                document.getElementById("lastName").value = lastName;
+                document.getElementById("email").value = email;
+                document.getElementById("phone").value = phone;
+                document.getElementById("birthPlace").value = birthPlace;
+                document.getElementById("birthDate").value = birthDate;
+                document.getElementById("gender").value = gender;
+                document.getElementById("nationality").value = nationality;
+                document.getElementById("religion").value = religion;
+                document.getElementById("photo").value = photo;
+                console.log(regionid);
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+            </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#example').DataTable();

@@ -7,6 +7,7 @@ package tools;
 
 import controllers.EmployeeController;
 import controllers.EmployeeRoleController;
+import controllers.InterviewController;
 import controllers.LoginRegisterController;
 import controllers.ParticipantController;
 import controllers.PlacementController;
@@ -14,6 +15,7 @@ import daos.LoginRegisterDAO;
 import daos.EmployeeRoleDAO;
 import daos.GeneralDAO;
 import icontrollers.IEmployeeController;
+import icontrollers.IInterviewController;
 import icontrollers.ILoginRegisterController;
 import icontrollers.IParticiantController;
 import idaos.IGeneralDAO;
@@ -99,10 +101,13 @@ public class Testing {
 //            System.out.println((participant.getClass1() == null) ? "" : participant.getClass1().getId());
 //        }
 
-        PlacementController erc = new PlacementController(factory);
-        for (Placement p : erc.getAll()) {
-            System.out.println(p.getParticipant().getEmployee().getFirstName());
-        }
+//        PlacementController erc = new PlacementController(factory);
+//        for (Placement p : erc.getAll()) {
+//            System.out.println(p.getParticipant().getEmployee().getFirstName());
+//        }
+
+        IInterviewController intview = new InterviewController(factory);
+//        intview.save(id, date, time, location, department, pic, is_accepted, participant, client)
     }
 
 }

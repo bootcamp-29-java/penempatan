@@ -42,22 +42,6 @@ public class EmployeeController implements IEmployeeController {
         return igdao.getById(id);
     }
 
-    @Override
-    public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, boolean is_delete) {
-        String result = "";
-        try {
-            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(birth_date);
-            Employee employee = new Employee(id, first_name, last_name, email, birth_place, date1, gender, nationality, photo, is_delete);
-            if (igdao.saveOrDelete(employee, true)) {
-                result = "Save data berhasil";
-            } else {
-                result = "Save data gagal";
-            }
-        } catch (Exception e) {
-            result = "Save data error";
-        }
-        return result;
-    }
 
     @Override
     public String delete(String id) {
@@ -78,6 +62,23 @@ public class EmployeeController implements IEmployeeController {
     @Override
     public String genId() {
         return String.valueOf(Integer.parseInt(empdao.genId())+1);
+    }
+
+    @Override
+    public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, String religion, String phone, boolean is_delete) {
+    String result = "";
+        try {
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(birth_date);
+            Employee employee = new Employee(id, first_name, last_name, email, birth_place, date1, gender, nationality, photo, religion, phone, is_delete);
+            if (igdao.saveOrDelete(employee, true)) {
+                result = "Save data berhasil";
+            } else {
+                result = "Save data gagal";
+            }
+        } catch (Exception e) {
+            result = "Save data error";
+        }
+        return result;    
     }
 
 }

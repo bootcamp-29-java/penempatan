@@ -46,6 +46,8 @@ public class ParticipantServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("participants", ipc.getAll());
             request.getSession().setAttribute("classes", igdao.getAll());
+            request.getSession().setAttribute("status", status);
+            
             response.sendRedirect("participant.jsp");
         }
     }
@@ -76,6 +78,18 @@ public class ParticipantServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String par_id = request.getParameter("par_id");
+        String par_grade = request.getParameter("par_grade");
+        String par_class = request.getParameter("par_class");
+        
+        status = ipc.save(par_id, par_grade, par_class);
+        if (status.equalsIgnoreCase("Data Berhasil Disimpan")) {
+ 
+           request.getSession().setAttribute("status", status);
+            
+        } else {
+            request.setAttribute("status", status);
+        }
         processRequest(request, response);
     }
 

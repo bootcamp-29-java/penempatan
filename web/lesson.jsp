@@ -4,7 +4,8 @@
 
 <%
     List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
-
+    String status = (String) session.getAttribute("status");
+    out.println(status);
     if (lessons == null) {
         response.sendRedirect("lessonservlet");
     } else {
@@ -28,11 +29,13 @@
                 <div class="card-body">
                     <h5 class="card-title">Input Lesson</h5>
                     <p class="card-text">You can input new lesson data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
+                    <button type="button" onclick="getData('','')" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
                         Add Lesson    
                     </button>
                 </div>
             </div>
+            <br>
+             <div class="card ">
             <h5 class="card-header">List Employee Role</h5>
             <div class="card-body">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -52,7 +55,7 @@
                             <td scope="row"><%=empl.getId()%></td>
                             <td scope="row"><%=empl.getName()%></td>
                             <td>
-                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button onclick="getData('<%=empl.getId()%>', '<%=empl.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
                                     EDIT</button>
                             </td>
                             <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -79,30 +82,54 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="lessonservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
-                                    <input type="text" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                    <input type="text" class="form-control" id="id" name="lesson_id" placeholder="ID" value="">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="inputClass">Class</label>
-                                    <input type="text" class="form-control" id="class" name="class" placeholder="Class" value="">
+                                    <input type="text" class="form-control" id="class1" name="lesson_name" placeholder="Class" value="">
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Add Lesson</button>
-                                </div>
+                                
                             </div>
                         </form>
+                        <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Add Lesson</button>
+                                </div>
                     </div>
                 </div>
             </div>
         </div>
+         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+           <script>
+            function getData(id, class1, role) {
+                document.getElementById("id").value = id;
+                document.getElementById("class1").value = class1;
+              
+
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+            </script>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+      
     </body>
 </html>
 <%
     }
+    session.removeAttribute("lessons");
+    session.removeAttribute("status");
 %>

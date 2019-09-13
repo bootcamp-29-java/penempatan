@@ -79,6 +79,15 @@ public class RoleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String role_id = request.getParameter("role_id");
+        String role_name = request.getParameter("role_name");
+        
+        status = irc.save(role_id, role_name);
+        if (status.equalsIgnoreCase("Data Berhasil Disimpan")) {
+            request.getSession().setAttribute("status",status);
+        } else {
+            request.getSession().setAttribute("status",status);
+        }
         processRequest(request, response);
     }
 

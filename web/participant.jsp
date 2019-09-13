@@ -14,7 +14,8 @@
 <%
     List<Participant> participants = (List<Participant>) session.getAttribute("participants");
     List<Class> classes = (List<Class>) session.getAttribute("classes");
-
+    String status = (String) session.getAttribute("status");
+    out.print(status);
     if (participants == null) {
         response.sendRedirect("participantservlet");
     } else {
@@ -41,7 +42,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input New Participant</h5>
                     <p class="card-text">You can input new participant data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
+                    <button type="button" onclick="getData('','','')" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
                         Add Participant    
                     </button>
                 </div>
@@ -70,7 +71,7 @@
                             <td scope="row"><%=(empl.getGrade() == null) ? "" : empl.getGrade()%></td>
                             <td scope="row"><%=(empl.getClass1() == null) ? "" : empl.getClass1().getId()%></td>
                             <td>
-                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button onclick="getData('<%=empl.getId()%>', '<%=(empl.getGrade() == null) ? "" : empl.getGrade()%>','<%=(empl.getClass1() == null) ? "" : empl.getClass1().getId()%>' )" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipant">
                                     EDIT</button>
                             </td>
                             <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
@@ -96,17 +97,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="participantservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
-                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                    <input type="text" class="form-control" id="id" name="par_id" placeholder="ID" value="">
                                 </div>
-
-
                                 <div class="form-group col-md-12">
                                     <label for="inputGrade">Grade</label>
-                                    <select id="grade" name="grade" class="form-control">
+                                    <select id="grade" name="par_grade" class="form-control">
                                         <option value="">-Pilih-</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
@@ -114,13 +113,13 @@
                                     </select>
                                 </div>
 
-                            </div>
+                            
                             <div class="form-group col-md-12">
                                 <label>Class</label>
                                 <select id="class" name="class" class="form-control">
                                     <option value="">-Pilih-</option>
                                     <%for (Class c : classes) { %>
-                                    <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getTrainer()%></option>
+                                    <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getTrainer().getFirstName()%></option>
                                     <% } %>
                                 </select>
                             </div>
@@ -129,24 +128,38 @@
 
                                 <button type="submit" class="btn btn-primary">Add Participant</button>
                             </div>
+                          </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
             $(document).ready(function () {
                 $('#class').select2({
                     placeholder: 'Class',
                     allowClear: true
                 });
             });
-        </script>
+        </script>-->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+         <script>
+            function getData(id, grade, class1) {
+                document.getElementById("id").value = id;
+                document.getElementById("class").value = class1;
+                document.getElementById("grade").value = grade;
+
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+            </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable();
@@ -157,4 +170,5 @@
 </html>
 <%
     }
+    session.removeAttribute("status");
 %>

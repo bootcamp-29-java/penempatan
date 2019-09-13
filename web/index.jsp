@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -35,7 +35,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body>
-               <!-- Pemanggilan-->
+        <!-- Pemanggilan-->
         <div class="container">
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Employee Account</h5>
@@ -54,6 +54,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">ID</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
@@ -61,6 +62,11 @@
                                 <th scope="col">Birth Date</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Nationality</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Religion</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +74,7 @@
                                 for (Employee empl : employees) {
                             %>
                             <tr>
+                                <td scope="row"><%=empl.getId()%></td>
                                 <td scope="row"><%=empl.getFirstName()%></td>
                                 <td scope="row"><%=empl.getLastName()%></td>
                                 <td scope="row"><%=empl.getEmail()%></td>
@@ -76,6 +83,8 @@
                                 <td scope="row"><%=empl.getGender()%></td>
                                 <td scope="row"><%=empl.getNationality()%></td>
                                 <td scope="row"><%=empl.getPhoto()%></td>
+                                <td scope="row"><%=empl.getReligion()%></td>
+                                <td scope="row"><%=empl.getPhone()%></td>
                             </tr>
                             <%
                                 }
@@ -144,6 +153,7 @@
                                     <option value="WNA">WNA</option>
                                 </select>
                             </div>
+                                
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Create Account</button>
@@ -155,7 +165,7 @@
         </div>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-       
+
         <%
             if (status != null) {
                 if (status.equalsIgnoreCase("Login Berhasil") || status.equalsIgnoreCase("Save data berhasil")) {

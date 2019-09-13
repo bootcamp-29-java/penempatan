@@ -18,8 +18,9 @@ public interface IEmployeeController {
 
     public Employee getById(String id);
 
-    public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, boolean is_delete);
-
+    //public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, boolean is_delete);
+    public String save(String id, String first_name, String last_name, String email, String birth_place, String birth_date, String gender, String nationality, String photo, String religion, String phone, boolean is_delete);
+    
     public String delete(String id);
     public String genId();
 }
