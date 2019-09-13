@@ -5,13 +5,19 @@
  */
 package tools;
 
+import controllers.ClassController;
 import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
 import controllers.LoginRegisterController;
+import controllers.ParticipantController;
+import controllers.PlacementController;
 import daos.LoginRegisterDAO;
 import daos.EmployeeRoleDAO;
 import daos.GeneralDAO;
+import icontrollers.IClassController;
 import icontrollers.IEmployeeController;
 import icontrollers.ILoginRegisterController;
+import icontrollers.IParticiantController;
 import idaos.IGeneralDAO;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +32,8 @@ import java.util.Locale;
 import models.Account;
 import models.Employee;
 import models.EmployeeRole;
+import models.Participant;
+import models.Placement;
 import models.Role;
 import org.hibernate.SessionFactory;
 
@@ -34,14 +42,14 @@ import org.hibernate.SessionFactory;
  * @author Reza
  */
 public class Testing {
-    
+
     public static void show() {
         GeneralDAO<Employee> gdao = new GeneralDAO<>(HibernateUtil.getSessionFactory(), Employee.class);
         for (Employee employee : gdao.getAll()) {
             System.out.println(employee.getId() + " - " + employee.getFirstName());
         }
     }
-    
+
     public static void main(String[] args) throws ParseException, FileNotFoundException {
         SessionFactory factory = HibernateUtil.getSessionFactory();
 //        LoginRegisterDAO dao = new LoginRegisterDAO(factory);
@@ -84,9 +92,25 @@ public class Testing {
 //        show();
 //          IEmployeeController iec = new EmployeeController(factory);
 //          System.out.println(iec.save("2", "khrisna", "Khrisna", "accountgame607@gmail.com", "Klaten ", "2019-09-03", "Male", "WNI","image/default-image.png", false));
-        ILoginRegisterController ilrc = new LoginRegisterController(factory);
-        System.out.println(ilrc.updateByToken("9ekeZyz0NRfzQ9LkohXI", "Mustofa98"));
+       // ILoginRegisterController ilrc = new LoginRegisterController(factory);
+        //        System.out.println(ilrc.updateByToken("9ekeZyz0NRfzQ9LkohXI", "Mustofa98"));
+
+//        IParticiantController ipc = new ParticipantController(factory);
+//        for (Participant participant : ipc.getAll()) {
+////            System.out.println(participant.getClass1().getId());
+//            System.out.println((participant.getClass1() == null) ? "" : participant.getClass1().getId());
+//        }
+
+//        PlacementController erc = new PlacementController(factory);
+//        for (Placement p : erc.getAll()) {
+//            System.out.println(p.getParticipant().getEmployee().getFirstName());
+//        }
         
+//        IParticiantController ipa = new ParticipantController(factory);
+//        System.out.println(ipa.save("200", "A", "nt/30"));
+        
+        IClassController ican = new ClassController(factory);
+        System.out.println(ican.save("an/14","an", "15", "102"));
     }
-    
+
 }

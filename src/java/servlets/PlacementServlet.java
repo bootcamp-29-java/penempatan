@@ -5,8 +5,14 @@
  */
 package servlets;
 
-import controllers.EmployeeController;
-import icontrollers.IEmployeeController;
+import controllers.ClientController;
+import controllers.ParticipantController;
+import controllers.PlacementController;
+import daos.GeneralDAO;
+import icontrollers.IClientController;
+import icontrollers.IParticiantController;
+import icontrollers.IPlacementController;
+import idaos.IGeneralDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,19 +20,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Client;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
+@WebServlet(name = "PlacementServlet", urlPatterns = {"/placementservlet"})
+public class PlacementServlet extends HttpServlet {
+
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
-
+    private IPlacementController ipc = new PlacementController(factory);
+    private IParticiantController ipac = new ParticipantController(factory);
+    private IGeneralDAO<Client> igdao = new GeneralDAO<>(factory, Client.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,9 +49,10 @@ public class EmployeeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("employees", iec.getAll());
-            request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+            request.getSession().setAttribute("placements", ipc.getAll());
+            request.getSession().setAttribute("participants", ipac.getAll());
+            request.getSession().setAttribute("clients", igdao.getAll());
+            response.sendRedirect("placement.jsp");
         }
     }
 

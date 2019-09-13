@@ -5,8 +5,8 @@
  */
 package servlets;
 
-import controllers.EmployeeController;
-import icontrollers.IEmployeeController;
+import controllers.ClientController;
+import icontrollers.IClientController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,30 +19,20 @@ import tools.HibernateUtil;
 
 /**
  *
- * @author Lenovo
+ * @author ASUS
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employeeservlet"})
-public class EmployeeServlet extends HttpServlet {
-    private String status;
-    private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IEmployeeController iec = new EmployeeController(factory);
+@WebServlet(name = "ClientServlet", urlPatterns = {"/clientservlet"})
+public class ClientServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    String status;
+    private SessionFactory factory =  HibernateUtil.getSessionFactory();
+    IClientController cli = new ClientController(factory);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("employees", iec.getAll());
-            request.getSession().setAttribute("employeeId", iec.genId());
-            response.sendRedirect("index.jsp");
+           request.getSession().setAttribute("Clients", cli.getall());
+           response.sendRedirect("client.jsp");
         }
     }
 
@@ -72,6 +62,20 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("client_id");
+        String name = request.getParameter("client_name");
+        String loc = request.getParameter("client_loc");
+        status = cli.save(id, name, loc);
+        if(status.equalsIgnoreCase("Data Berhasil Disimpan")){
+            request.getSession().setAttribute("status", status);
+            request.getSession().setAttribute("cli_name", name);
+            System.out.println(status);
+        }
+        else{
+            request.getSession().setAttribute("status",status);
+           // response.sendRedirect("client.jsp");
+        }
+
         processRequest(request, response);
     }
 

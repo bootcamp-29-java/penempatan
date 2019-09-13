@@ -8,6 +8,7 @@ package daos;
 import idaos.IRoleDAO;
 import java.util.ArrayList;
 import java.util.List;
+import models.Employee;
 import models.EmployeeRole;
 import models.Role;
 import org.hibernate.Query;
@@ -47,5 +48,23 @@ public class EmployeeRoleDAO implements IRoleDAO{
             session.close();
         }
         return roles;
+    }
+
+    @Override
+    public List<EmployeeRole> getTrainer() {
+        List<EmployeeRole> reg = new ArrayList<>();
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            reg = session.createQuery("from EmployeeRole where role = 2").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return reg;
     }
 }

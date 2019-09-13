@@ -19,8 +19,9 @@ public interface IEmployeeRoleController {
     //        return irdao.getByEmployee(id);
     //    }
     List<EmployeeRole> getAll();
+    List<EmployeeRole> getTrainer();
 
-    EmployeeRole getById(String id);
+    public List<EmployeeRole> getById(String id);
 
     String save(String employee, String role);
     

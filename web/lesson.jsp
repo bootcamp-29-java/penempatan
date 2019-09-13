@@ -1,4 +1,16 @@
+<%@page import="java.util.List"%>
+<%@page import="models.Lesson"%>
 <%@include file = "header.jsp" %>
+
+<%
+    List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
+    String status = (String) session.getAttribute("status");
+    out.println(status);
+    if (lessons == null) {
+        response.sendRedirect("lessonservlet");
+    } else {
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,32 +22,53 @@
     </head>
 
     <body>
-        
-
-        <!--coba-->
-        
-
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Lesson</h1>
-                    </div>
-                    <div class="container">
-                        <div class="card w-100" style="margin-top: 20px;">
-                            <h5 class="card-header">Create Lesson</h5>
-                            <div class="card-body">
-                                <h5 class="card-title">Input Lesson</h5>
-                                <p class="card-text">You can input new lesson data in here</p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
-                                    Add Lesson    
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-
+        <!--card atas-->
+        <div class="container">
+            <div class="card w-100" style="margin-top: 20px;">
+                <h5 class="card-header">Create Lesson</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Input Lesson</h5>
+                    <p class="card-text">You can input new lesson data in here</p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
+                        Add Lesson    
+                    </button>
+                </div>
+            </div>
+            <h5 class="card-header">List Employee Role</h5>
+            <div class="card-body">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Lesson empl : lessons) {
+                        %>
+                        <tr>
+                            <td scope="row"><%=empl.getId()%></td>
+                            <td scope="row"><%=empl.getName()%></td>
+                            <td>
+                                <button onclick="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    EDIT</button>
+                            </td>
+                            <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <!--DATA TABLE HERE-->
             </div>
         </div>
-        <!--coba-->
+        <!--card atas-->
+
+        <!--table here-->
 
         <div class="modal fade" id="addLesson" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -47,15 +80,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="lessonservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
-                                    <input type="text" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                    <input type="text" class="form-control" id="id" name="lesson_id" placeholder="ID" value="">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="inputClass">Class</label>
-                                    <input type="text" class="form-control" id="class" name="class" placeholder="Class" value="">
+                                    <input type="text" class="form-control" id="class" name="lesson_name" placeholder="Class" value="">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Add Lesson</button>
@@ -71,3 +104,8 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </body>
 </html>
+<%
+    }
+    session.removeAttribute("lessons");
+    session.removeAttribute("status");
+%>

@@ -15,5 +15,6 @@ import models.EmployeeRole;
 public interface IRoleDAO {
 
     List<EmployeeRole> getByEmployee(String id);
+    List<EmployeeRole> getTrainer();
     
 }
