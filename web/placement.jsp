@@ -4,6 +4,7 @@
     Author     : ASUS
 --%>
 
+<%@page import="models.EmployeeRole"%>
 <%@page import="models.Client"%>
 <%@page import="models.Participant"%>
 <%@page import="java.util.List"%>
@@ -13,11 +14,17 @@
 <!DOCTYPE html>
 
 <%
+    List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<Placement> placements = (List<Placement>) session.getAttribute("placements");
     List<Participant> participants = (List<Participant>) session.getAttribute("participants");
     List<Client> clients = (List<Client>) session.getAttribute("clients");
+    String status = (String) session.getAttribute("status");
 
-    if (placements == null) {
+    if (logSession == null) {
+        out.print(logSession);
+        out.println("<script>alert('Anda belum login!')</script>");
+        out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
+    } else if (placements == null) {
         response.sendRedirect("placementservlet");
     } else {
 %>
@@ -43,7 +50,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input New Placement</h5>
                     <p class="card-text">You can input new placement data in here</p>
-                    <button type="button" onclick="getData('','','','','','','','','')" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement">
+                    <button type="button" onclick="getData('', '', '', '', '', '', '', '', '')" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement">
                         Add Placement   
                     </button>
                 </div>
@@ -79,10 +86,10 @@
                             <td> 
                                 <button onclick="getData('<%=empl.getId()%>', '<%=(empl.getStartDate() == null) ? "" : empl.getStartDate()%>',
                                                 '<%=(empl.getEndDate() == null) ? "" : empl.getEndDate()%>', '<%=(empl.getPosition() == null) ? "" : empl.getPosition()%>', '<%=(empl.getDepartment() == null) ? "" : empl.getDepartment()%>',
-                                                 '<%=empl.getParticipant().getId()%>','<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement ">
+                                                '<%=empl.getParticipant().getId()%>', '<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement ">
                                     EDIT</button>
                             </td>
-                            <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                            <td><button onclick='setAlert("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
                         </tr>
                         <%
                             }
@@ -106,7 +113,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="placementservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
@@ -131,7 +138,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputGender">Participant</label>
-                                <select id="participant" name="provinsi" class="form-control">
+                                <select id="participant" name="participant" class="form-control">
                                     <option value="">-Pilih-</option>
                                     <%for (Participant p : participants) {%>
                                     <option value="<%=p.getId()%>" ><%=p.getId()%> - <%=p.getEmployee().getFirstName()%></option>
@@ -140,7 +147,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputNationality">Client</label>
-                                <select id="client" name="provinsi" class="form-control">
+                                <select id="client" name="client" class="form-control">
                                     <option value="">-Pilih-</option>
                                     <%for (Client c : clients) {%>
                                     <option value="<%=c.getId()%>" ><%=c.getId()%> - <%=c.getName()%></option>
@@ -178,29 +185,66 @@
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-                                   function getData(id, startDate, endDate, position, department, participant, client) {
-                                       document.getElementById("id").value = id;
-                                       document.getElementById("startDate").value = startDate;
-                                       document.getElementById("endDate").value = endDate;
-                                       document.getElementById("position").value = position;
-                                       document.getElementById("department").value = department;
-                                       document.getElementById("participant").value = participant;
-                                       document.getElementById("client").value = client;
+                                function getData(id, startDate, endDate, position, department, participant, client) {
+                                    document.getElementById("id").value = id;
+                                    document.getElementById("startDate").value = startDate;
+                                    document.getElementById("endDate").value = endDate;
+                                    document.getElementById("position").value = position;
+                                    document.getElementById("department").value = department;
+                                    document.getElementById("participant").value = participant;
+                                    document.getElementById("client").value = client;
 
-                                       if (id !== '') {
-                                           document.getElementById("id").readOnly = true;
-                                       } else {
-                                           document.getElementById("id").readOnly = false;
-                                       }
-                                   }
+                                    if (id !== '') {
+                                        document.getElementById("id").readOnly = true;
+                                    } else {
+                                        document.getElementById("id").readOnly = false;
+                                    }
+                                }
         </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable();
             });
         </script>
+
+        <%
+            if (status != null) {
+                if (status.equalsIgnoreCase("Data Berhasil Disimpan") || status.equalsIgnoreCase("Data Berhasil Dihapus")) {
+                    out.println("<script type=\"text/javascript\">;");
+                    out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
+                    out.println("</script>;");
+                } else {
+                    out.println("<script type=\"text/javascript\">;");
+                    out.println("swal(\"GAGAL!\", \"" + status + "\", \"error\");");
+                    out.println("</script>;");
+                }
+            }
+        %>
+
+        <script>
+            function setAlert(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "placementservlet?action=delete&&id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
 <%
     }
+
+    request.removeAttribute("placements");
+    request.removeAttribute("participants");
+    request.removeAttribute("clients");
+    request.removeAttribute("status");
 %>

@@ -52,7 +52,7 @@ public class PlacementController implements IPlacementController {
         try {
             Date date_start = new SimpleDateFormat("YYYY-MM-dd").parse(start_date);
             Date date_end = new SimpleDateFormat("YYYY-MM-dd").parse(end_date);
-            placement.setId(Integer.parseInt(id));
+            placement.setId(id);
             placement.setStartDate(date_start);
             placement.setEndDate(date_end);
             placement.setPosition(position);
@@ -68,6 +68,21 @@ public class PlacementController implements IPlacementController {
                 result = "Kesalahan saat Simpan";
         }
         
+        
+        return result;
+    }
+
+    @Override
+    public String delete(String id) {
+        String result = "";
+        
+        Placement placement = igdao.getById(id);
+        
+        if(igdao.saveOrDelete(placement, false)){
+            result = "Data Berhasil Dihapus";
+        }else{
+            result = "Data Gagal Dihapus";
+        }
         
         return result;
     }

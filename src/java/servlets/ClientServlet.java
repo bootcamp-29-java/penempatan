@@ -25,14 +25,15 @@ import tools.HibernateUtil;
 public class ClientServlet extends HttpServlet {
 
     String status;
-    private SessionFactory factory =  HibernateUtil.getSessionFactory();
+    private SessionFactory factory = HibernateUtil.getSessionFactory();
     IClientController cli = new ClientController(factory);
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           request.getSession().setAttribute("Clients", cli.getall());
-           response.sendRedirect("client.jsp");
+            request.getSession().setAttribute("clients", cli.getall());
+            response.sendRedirect("client.jsp");
         }
     }
 
@@ -48,6 +49,12 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action") + "";
+        String id = request.getParameter("id") + "";
+        if (action.equals("delete")) {
+            status = cli.delete(id);
+            request.getSession().setAttribute("status", status);
+        }
         processRequest(request, response);
     }
 
@@ -62,19 +69,11 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("client_id");
-        String name = request.getParameter("client_name");
-        String loc = request.getParameter("client_loc");
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String loc = request.getParameter("location");
         status = cli.save(id, name, loc);
-        if(status.equalsIgnoreCase("Data Berhasil Disimpan")){
-            request.getSession().setAttribute("status", status);
-            request.getSession().setAttribute("cli_name", name);
-            System.out.println(status);
-        }
-        else{
-            request.getSession().setAttribute("status",status);
-           // response.sendRedirect("client.jsp");
-        }
+        request.getSession().setAttribute("status", status);
 
         processRequest(request, response);
     }

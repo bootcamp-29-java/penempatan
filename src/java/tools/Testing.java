@@ -11,13 +11,16 @@ import controllers.InterviewController;
 import controllers.LoginRegisterController;
 import controllers.ParticipantController;
 import controllers.PlacementController;
+import controllers.RoleController;
 import daos.LoginRegisterDAO;
 import daos.EmployeeRoleDAO;
 import daos.GeneralDAO;
 import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
 import icontrollers.IInterviewController;
 import icontrollers.ILoginRegisterController;
 import icontrollers.IParticiantController;
+import icontrollers.IRoleController;
 import idaos.IGeneralDAO;
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,22 +95,27 @@ public class Testing {
 //        show();
 //          IEmployeeController iec = new EmployeeController(factory);
 //          System.out.println(iec.save("2", "khrisna", "Khrisna", "accountgame607@gmail.com", "Klaten ", "2019-09-03", "Male", "WNI","image/default-image.png", false));
-        ILoginRegisterController ilrc = new LoginRegisterController(factory);
+//        ILoginRegisterController ilrc = new LoginRegisterController(factory);
         //        System.out.println(ilrc.updateByToken("9ekeZyz0NRfzQ9LkohXI", "Mustofa98"));
-
 //        IParticiantController ipc = new ParticipantController(factory);
 //        for (Participant participant : ipc.getAll()) {
 ////            System.out.println(participant.getClass1().getId());
 //            System.out.println((participant.getClass1() == null) ? "" : participant.getClass1().getId());
 //        }
-
 //        PlacementController erc = new PlacementController(factory);
 //        for (Placement p : erc.getAll()) {
 //            System.out.println(p.getParticipant().getEmployee().getFirstName());
 //        }
-
-        IInterviewController intview = new InterviewController(factory);
+//        IInterviewController intview = new InterviewController(factory);
 //        intview.save(id, date, time, location, department, pic, is_accepted, participant, client)
+//        IRoleController irc = new RoleController(factory);
+//        System.out.println(irc.delete("5"));
+//        IEmployeeRoleController irc = new EmployeeRoleController(factory);
+//        System.out.println(irc.delete("39"));
+        IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+        for (EmployeeRole employeeRole : ierc.getTrainer()) {
+            System.out.println(employeeRole.getEmployee().getFirstName());
+        }
     }
 
 }

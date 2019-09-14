@@ -49,7 +49,7 @@ public class ClientController implements IClientController {
     
     public String delete(String id){
         String result = "";
-        Client client = new Client(id);
+        Client client = igdao.getById(id);
         if(igdao.saveOrDelete(client, false)){
             result = "Data Berhasil Dihapus";
         }

@@ -41,7 +41,7 @@ public class Placement implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -62,15 +62,15 @@ public class Placement implements Serializable {
     public Placement() {
     }
 
-    public Placement(Integer id) {
+    public Placement(String id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

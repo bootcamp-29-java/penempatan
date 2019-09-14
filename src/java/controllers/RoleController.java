@@ -45,10 +45,11 @@ public class RoleController implements IRoleController {
         return result;
     }
     
+    @Override
     public String delete(String id){
         String result = "";
-        Role role = new Role(id);
-        if (igdao.saveOrDelete(role, true)) {
+        Role role = igdao.getById(id);
+        if (igdao.saveOrDelete(role, false)) {
             result="Data Berhasil Dihapus";
         } else {
             result="Data Gagal Dihapus";

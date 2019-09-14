@@ -21,6 +21,7 @@ import org.hibernate.SessionFactory;
  * @author Lenovo
  */
 public class EmployeeRoleController implements IEmployeeRoleController {
+
     private SessionFactory factory;
     private IGeneralDAO<EmployeeRole> igdao;
     private IGeneralDAO<Employee> empdao;
@@ -37,13 +38,14 @@ public class EmployeeRoleController implements IEmployeeRoleController {
 //    public List<EmployeeRole> getById(String id){
 //        return irdao.getByEmployee(id);
 //    }
+
     @Override
-    public List<EmployeeRole> getAll(){
+    public List<EmployeeRole> getAll() {
         return igdao.getAll();
     }
-    
+
     @Override
-    public List<EmployeeRole> getById(String id){
+    public List<EmployeeRole> getById(String id) {
         return irdao.getByEmployee(id);
     }
 //    
@@ -51,17 +53,18 @@ public class EmployeeRoleController implements IEmployeeRoleController {
 //    public EmployeeRole getById(String id){
 //        return igdao.getById(id);
 //    }
-    
+
     @Override
-    public String save( String employee, String role){
-        String result= "";
+    public String save(String id, String employee, String role) {
+        String result = "";
         Employee employee_1 = empdao.getById(employee);
         Role role_1 = rldao.getById(role);
         try {
             EmployeeRole employeeRole = new EmployeeRole();
+            employeeRole.setId(id);
             employeeRole.setEmployee(employee_1);
             employeeRole.setRole(role_1);
-            
+
             if (igdao.saveOrDelete(employeeRole, true)) {
                 result = "Data Berhasil Disimpan";
             } else {
@@ -69,7 +72,7 @@ public class EmployeeRoleController implements IEmployeeRoleController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            result="Gagal dalam Menyimpan";
+            result = "Gagal dalam Menyimpan";
         }
         return result;
     }
@@ -77,5 +80,23 @@ public class EmployeeRoleController implements IEmployeeRoleController {
     @Override
     public List<EmployeeRole> getTrainer() {
         return irdao.getTrainer();
+    }
+
+    @Override
+    public String delete(String id) {
+        String result = "";
+        EmployeeRole employeeRole = igdao.getById(id);
+        if (igdao.saveOrDelete(employeeRole, false)) {
+            result = "Data Berhasil Dihapus";
+        } else {
+            result = "Data Gagal Dihapus";
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<EmployeeRole> getParticipant() {
+        return irdao.getParticipant();
     }
 }

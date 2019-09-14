@@ -20,9 +20,11 @@ public interface IEmployeeRoleController {
     //    }
     List<EmployeeRole> getAll();
     List<EmployeeRole> getTrainer();
+    List<EmployeeRole> getParticipant();
 
     public List<EmployeeRole> getById(String id);
 
-    String save(String employee, String role);
+    String save(String id, String employee, String role);
+    String delete(String id);
     
 }

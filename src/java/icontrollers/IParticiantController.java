@@ -19,5 +19,6 @@ public interface IParticiantController {
     Participant getById(String id);
 
     String save(String id, String grade, String classes);
+    String delete(String id);
     
 }

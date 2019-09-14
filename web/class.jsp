@@ -5,6 +5,7 @@
 <%@page import="java.util.List"%>
 <%@include file = "header.jsp" %>
 <%
+    List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<Class> cl = (List<Class>) session.getAttribute("Kelass");
     List<Batch> bc = (List<Batch>) session.getAttribute("Batchs");
     List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
@@ -12,7 +13,11 @@
     String status = (String) session.getAttribute("status");
     out.println(status);
 
-    if (cl == null || bc == null) {
+    if (logSession == null) {
+        out.print(logSession);
+        out.println("<script>alert('Anda belum login!')</script>");
+        out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
+    } else if (cl == null || bc == null) {
         response.sendRedirect("classservlet");
     } else {
 
@@ -42,7 +47,7 @@
                     <button type="button" onclick="getData('', '', '', '')" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
                         Add Class    
                     </button>
-                    <button type="button" onclick="getData('')" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
+                    <button type="button" onclick="getDataBatch('')" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
                         Add Batch    
                     </button>
                 </div>
@@ -66,19 +71,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%                                for (Class empl : cl) {
+                            <%                                
+                                for (Class empl : cl) {
                             %>
                             <tr>
                                 <td scope="row"><%=empl.getId()%></td>
                                 <td scope="row"><%=empl.getLesson().getName()%></td>
                                 <td scope="row"><%=empl.getBatch().getId()%></td>
                                 <td scope="row"><%=empl.getTrainer().getFirstName()%></td>
-                                
+
                                 <td>
-                                    <button onclick="getData('<%=empl.getId()%>', '<%=empl.getLesson().getId()%>', '<%=empl.getBatch().getId()%>','<%=empl.getTrainer().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
+                                    <button onclick="getData('<%=empl.getLesson().getId()%>', '<%=empl.getBatch().getId()%>', '<%=empl.getTrainer().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
                                         EDIT</button>
                                 </td>
-                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                                <td><button onclick='setAlertClass("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -107,15 +113,15 @@
                         </thead>
                         <tbody>
                             <%
-                                for (Batch empl : bc) {
+                                for (Batch b : bc) {
                             %>
                             <tr>
-                                <td scope="row"><%=empl.getId()%></td>
+                                <td scope="row"><%=b.getId()%></td>
                                 <td>
-                                    <button onclick="getDataBatch('<%=empl.getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
+                                    <button onclick="getDataBatch('<%=b.getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
                                         EDIT</button>
                                 </td>
-                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                                <td><button onclick='setAlertBatch("<%=b.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -145,10 +151,10 @@
                     <div class="modal-body">
                         <form action="classservlet" method="POST">
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+<!--                                <div class="form-group col-md-12">
                                     <label for="inputIDClass">ID</label>
                                     <input type="text" class="form-control" id="id" name="id" placeholder="ID" value="">
-                                </div>
+                                </div>-->
                             </div>
                             <!--lesson-->
                             <div class="form-group">
@@ -176,12 +182,12 @@
                                 <select id="trainer" name="trainer_id" class="form-control">
                                     <option ></option>
                                     <%for (EmployeeRole t : trainers) {%>
-                                    <option value="<%=t.getId()%>" ><%=t.getId()%> - <%=t.getEmployee().getFirstName()%></option>
+                                    <option value="<%=t.getEmployee().getId()%>" ><%=t.getEmployee().getId()%> - <%=t.getEmployee().getFirstName()%></option>
                                     <% } %>
                                 </select>
                             </div>  
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Add Class</button>
+                                <button type="submit" class="btn btn-primary">Save Class</button>
                             </div>
 
                         </form>
@@ -202,7 +208,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="classservlet" method="POST">
+                        <form action="batchservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputIDBatch">ID</label>
@@ -211,7 +217,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Add Batch</button>
+                                    <button type="submit" class="btn btn-primary">Save Batch</button>
                                 </div>
                         </form>
                     </div>
@@ -249,8 +255,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-                                        function getData(id, lesson, batch, trainer) {
-                                            document.getElementById("id").value = id;
+                                        function getData(lesson, batch, trainer) {
                                             document.getElementById("lesson").value = lesson;
                                             document.getElementById("batch").value = batch;
                                             document.getElementById("trainer").value = trainer;
@@ -286,9 +291,64 @@
         });
     </script>
 
+    <%
+        if (status != null) {
+            if (status.equalsIgnoreCase("Data Berhasil Disimpan") || status.equalsIgnoreCase("Data Berhasil Dihapus")) {
+                out.println("<script type=\"text/javascript\">;");
+                out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
+                out.println("</script>;");
+            } else {
+                out.println("<script type=\"text/javascript\">;");
+                out.println("swal(\"GAGAL!\", \"" + status + "\", \"error\");");
+                out.println("</script>;");
+            }
+        }
+    %>
+
+    <script>
+        function setAlertClass(id) {
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "classservlet?action=delete&&id=" + id;
+                } else {
+                    swal("Anda Membatalkan Mengahpus Data!");
+                }
+            });
+        }
+    </script>
+    
+    <script>
+        function setAlertBatch(id) {
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "batchservlet?action=delete&&id=" + id;
+                } else {
+                    swal("Anda Membatalkan Mengahpus Data!");
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
 <%
     }
+
     session.removeAttribute("status");
+    session.removeAttribute("Kelass");
+    session.removeAttribute("Batchs");
+    session.removeAttribute("lessons");
+    session.removeAttribute("trainers");
 %>

@@ -19,5 +19,5 @@ public interface IPlacementController {
     Placement getById(String id);
 
     String save(String id, String start_date, String end_date, String position, String department, String client, String participant);
-    
+    String delete(String id);
 }

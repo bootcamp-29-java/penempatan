@@ -57,6 +57,12 @@ public class LessonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action") + "";
+        String id = request.getParameter("id") + "";
+        if (action.equals("delete")) {
+            status = ilc.delete(id);
+            request.getSession().setAttribute("status", status);
+        }
         processRequest(request, response);
     }
 
@@ -73,17 +79,10 @@ public class LessonServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("lesson_id");
         String nm = request.getParameter("lesson_name");
+        
         status = ilc.save(id, nm);
-        if(status.equalsIgnoreCase("Data Berhasil Disimpan")){
-            request.getSession().setAttribute("status",status);
-            request.getSession().setAttribute("less_name", nm);
-            //response.sendRedirect("lesson.jsp");
-            System.out.println(status);
-        }
-        else{
-            request.getSession().setAttribute("status",status);
-            response.sendRedirect("lesson.jsp");
-        }
+        request.getSession().setAttribute("status", status);
+        
         processRequest(request, response);
     }
 

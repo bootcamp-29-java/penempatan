@@ -7,14 +7,8 @@ package servlets;
 
 import controllers.BatchControler;
 import controllers.ClassController;
-import controllers.EmployeeController;
-import controllers.EmployeeRoleController;
-import controllers.LessonController;
 import icontrollers.IBatchController;
 import icontrollers.IClassController;
-import icontrollers.IEmployeeController;
-import icontrollers.IEmployeeRoleController;
-import icontrollers.ILessonController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,24 +23,25 @@ import tools.HibernateUtil;
  *
  * @author ASUS
  */
-@WebServlet(name = "ClassServlet", urlPatterns = {"/classservlet"})
-public class ClassServlet extends HttpServlet {
+@WebServlet(name = "BatchServlet", urlPatterns = {"/batchservlet"})
+public class BatchServlet extends HttpServlet {
+
     String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IClassController ican = new ClassController(factory);
     private IBatchController ib = new BatchControler(factory);
-    private ILessonController ilc = new LessonController(factory);
-    private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
-    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("Kelass", ican.getall());
-            request.getSession().setAttribute("Batchs", ib.getall());
-            request.getSession().setAttribute("lessons", ilc.getall());
-            request.getSession().setAttribute("trainers", ierc.getTrainer());
-            
             response.sendRedirect("class.jsp");
         }
     }
@@ -66,7 +61,7 @@ public class ClassServlet extends HttpServlet {
         String action = request.getParameter("action") + "";
         String id = request.getParameter("id") + "";
         if (action.equals("delete")) {
-            status = ican.delete(id);
+            status = ib.delete(id);
             request.getSession().setAttribute("status", status);
         }
         processRequest(request, response);
@@ -84,11 +79,8 @@ public class ClassServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String batch_id = request.getParameter("batch_id");
-        String trainer_id = request.getParameter("trainer_id");
-        String lesson_id = request.getParameter("lesson_id");
-        String kelas_id = lesson_id+"/"+batch_id;
         
-        status = ican.save(kelas_id, lesson_id, batch_id, trainer_id);
+        status = ib.save(batch_id);
         request.getSession().setAttribute("status", status);
         
         processRequest(request, response);

@@ -5,16 +5,12 @@
  */
 package servlets;
 
-import controllers.BatchControler;
-import controllers.ClassController;
 import controllers.EmployeeController;
 import controllers.EmployeeRoleController;
-import controllers.LessonController;
-import icontrollers.IBatchController;
-import icontrollers.IClassController;
+import controllers.RoleController;
 import icontrollers.IEmployeeController;
 import icontrollers.IEmployeeRoleController;
-import icontrollers.ILessonController;
+import icontrollers.IRoleController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,25 +25,31 @@ import tools.HibernateUtil;
  *
  * @author ASUS
  */
-@WebServlet(name = "ClassServlet", urlPatterns = {"/classservlet"})
-public class ClassServlet extends HttpServlet {
-    String status;
+@WebServlet(name = "EmployeeRoleServlet", urlPatterns = {"/employeeroleservlet"})
+public class EmployeeRoleServlet extends HttpServlet {
+
+    private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    private IClassController ican = new ClassController(factory);
-    private IBatchController ib = new BatchControler(factory);
-    private ILessonController ilc = new LessonController(factory);
     private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
-    
+    private IRoleController irc = new RoleController(factory);
+    private IEmployeeController iec = new EmployeeController(factory);
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("Kelass", ican.getall());
-            request.getSession().setAttribute("Batchs", ib.getall());
-            request.getSession().setAttribute("lessons", ilc.getall());
-            request.getSession().setAttribute("trainers", ierc.getTrainer());
-            
-            response.sendRedirect("class.jsp");
+            request.getSession().setAttribute("employeesRole", ierc.getAll());
+            request.getSession().setAttribute("roles", irc.getAll());
+            request.getSession().setAttribute("employees", iec.getAll());
+//            response.sendRedirect("role.jsp");
         }
     }
 
@@ -66,8 +68,9 @@ public class ClassServlet extends HttpServlet {
         String action = request.getParameter("action") + "";
         String id = request.getParameter("id") + "";
         if (action.equals("delete")) {
-            status = ican.delete(id);
+            status = ierc.delete(id);
             request.getSession().setAttribute("status", status);
+            response.sendRedirect("role.jsp");
         }
         processRequest(request, response);
     }
@@ -83,13 +86,13 @@ public class ClassServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String batch_id = request.getParameter("batch_id");
-        String trainer_id = request.getParameter("trainer_id");
-        String lesson_id = request.getParameter("lesson_id");
-        String kelas_id = lesson_id+"/"+batch_id;
+        String id = request.getParameter("idERole");
+        String employee = request.getParameter("employee");
+        String role = request.getParameter("role");
         
-        status = ican.save(kelas_id, lesson_id, batch_id, trainer_id);
+        status = ierc.save(id, employee, role);
         request.getSession().setAttribute("status", status);
+        response.sendRedirect("role.jsp");
         
         processRequest(request, response);
     }

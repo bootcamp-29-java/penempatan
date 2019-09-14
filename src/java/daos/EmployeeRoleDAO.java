@@ -67,4 +67,22 @@ public class EmployeeRoleDAO implements IRoleDAO{
         }
         return reg;
     }
+
+    @Override
+    public List<EmployeeRole> getParticipant() {
+        List<EmployeeRole> reg = new ArrayList<>();
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            reg = session.createQuery("from EmployeeRole where role = 3").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return reg;
+    }
 }

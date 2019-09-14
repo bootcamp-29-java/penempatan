@@ -16,5 +16,6 @@ public interface IRoleDAO {
 
     List<EmployeeRole> getByEmployee(String id);
     List<EmployeeRole> getTrainer();
+    List<EmployeeRole> getParticipant();
     
 }

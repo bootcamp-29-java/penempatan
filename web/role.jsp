@@ -7,11 +7,18 @@
 <!DOCTYPE html>
 
 <%
+    List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<EmployeeRole> employeesRole = (List<EmployeeRole>) session.getAttribute("employeesRole");
     List<Role> roles = (List<Role>) session.getAttribute("roles");
     List<Employee> employees = (List<Employee>) session.getAttribute("employees");
+    String status = (String) session.getAttribute("status");
+    out.print(status);
 
-    if (employeesRole == null || roles == null) {
+    if (logSession == null) {
+        out.print(logSession);
+        out.println("<script>alert('Anda belum login!')</script>");
+        out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
+    } else if (roles == null || employeesRole == null) {
         response.sendRedirect("roleservlet");
     } else {
 %>
@@ -43,7 +50,7 @@
                 </div>
             </div>
             <br>
-           
+
             <div class="card w-100">
                 <h5 class="card-header">List Employee Role</h5>
                 <div class="card-body">
@@ -68,10 +75,10 @@
                                 <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
                                 <td scope="row"><%=empl.getRole().getName()%></td>
                                 <td>
-                                    <button onclick="getData('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
+                                    <button onclick="getDataERole('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
                                         EDIT</button>
                                 </td>
-                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                                <td><button onclick='setAlertERole("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -81,9 +88,9 @@
                     <!--DATA TABLE HERE-->
                 </div>
             </div>
-                        
+
             <br>
-            
+
             <div class="card w-100">
                 <h5 class="card-header">List Role</h5>
                 <div class="card-body">
@@ -98,16 +105,16 @@
                         </thead>
                         <tbody>
                             <%
-                                for (Role empl : roles) {
+                                for (Role role : roles) {
                             %>
                             <tr>
-                                <td scope="row"><%=empl.getId()%></td>
-                                <td scope="row"><%=empl.getName()%></td>
+                                <td scope="row"><%=role.getId()%></td>
+                                <td scope="row"><%=role.getName()%></td>
                                 <td>
-                                    <button onclick="getDataRole('<%=empl.getId()%>', '<%=empl.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
+                                    <button onclick="getDataRole('<%=role.getId()%>', '<%=role.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
                                         EDIT</button>
                                 </td>
-                                <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                                <td><button onclick='setAlertRole("<%=role.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -134,11 +141,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="employeeroleservlet" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputID">ID</label>
-                                    <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
+                                    <input type="number" class="form-control" id="idERole" name="idERole" placeholder="ID" value="">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputEmployee">Employee</label>
@@ -163,7 +170,7 @@
 
                             <div class="modal-footer">
 
-                                <button type="submit" class="btn btn-primary">Add Employee Role</button>
+                                <button type="submit" class="btn btn-primary">Save Employee Role</button>
                             </div>
                         </form>
                     </div>
@@ -215,7 +222,7 @@
 
                             <div class="modal-footer">
 
-                                <button type="submit" class="btn btn-primary">Add Role</button>
+                                <button type="submit" class="btn btn-primary">Save Role</button>
                             </div>
                         </form>
                     </div>
@@ -229,8 +236,8 @@
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-            function getData(id, employee, role) {
-                document.getElementById("id").value = id;
+            function getDataERole(id, employee, role) {
+                document.getElementById("idERole").value = id;
                 document.getElementById("employee").value = employee;
                 document.getElementById("role").value = role;
 
@@ -259,8 +266,62 @@
             });
         </script>
 
+        <%
+            if (status != null) {
+                if (status.equalsIgnoreCase("Data Berhasil Disimpan") || status.equalsIgnoreCase("Data Berhasil Dihapus")) {
+                    out.println("<script type=\"text/javascript\">;");
+                    out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
+                    out.println("</script>;");
+                } else {
+                    out.println("<script type=\"text/javascript\">;");
+                    out.println("swal(\"GAGAL!\", \"" + status + "\", \"error\");");
+                    out.println("</script>;");
+                }
+            }
+        %>
+
+        <script>
+            function setAlertRole(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "roleservlet?action=delete&&id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            function setAlertERole(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "employeeroleservlet?action=delete&&id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
 <%
     }
+
+    session.removeAttribute("status");
+    session.removeAttribute("roles");
+    session.removeAttribute("employees");
+    session.removeAttribute("employeesRole");
 %>

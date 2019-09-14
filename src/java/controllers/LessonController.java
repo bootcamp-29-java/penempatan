@@ -51,7 +51,7 @@ public class LessonController implements ILessonController {
     
     public String delete(String id){
         String result = "";
-        Lesson lesson = new Lesson(id);
+        Lesson lesson = igdao.getById(id);
         if(igdao.saveOrDelete(lesson, false)){
             result = "Data Berhasil Dihapus";
         }

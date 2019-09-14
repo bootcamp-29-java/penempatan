@@ -4,6 +4,7 @@
     Author     : ASUS
 --%>
 
+<%@page import="models.EmployeeRole"%>
 <%@page import="models.Employee"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,11 +12,15 @@
 <!DOCTYPE html>
 
 <%
-    String employeeId = (String) session.getAttribute("employeeId");
-    List<Employee> employees = (List<Employee>) session.getAttribute("employees");
-    String status = (String) session.getAttribute("status2");
+    List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
+    List<Employee> employees = (List<Employee>) session.getAttribute("employees1");
+    String status = (String) session.getAttribute("status");
     out.print(status);
-    if (employees == null) {
+    if (logSession == null) {
+        out.print(logSession);
+        out.println("<script>alert('Anda belum login!')</script>");
+        out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
+    } else if (employees == null) {
         response.sendRedirect("employeeservlet1");
     } else {
 %>
@@ -46,7 +51,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input Employee</h5>
                     <p class="card-text">You can input employee data in here</p>
-                    <button type="button" class="btn btn-primary" onclick="getData('','','','','','','','','','','')" data-toggle="modal" data-target="#addEmployee">
+                    <button type="button" class="btn btn-primary" onclick="getData('', '', '', '', '', '', '', '', '', '', '')" data-toggle="modal" data-target="#addEmployee">
                         Add Employee
                     </button>
                 </div>
@@ -92,11 +97,11 @@
                             <td scope="row"><%=empl.getReligion()%></td>
                             <td scope="row"><%=empl.getPhone()%></td>
                             <td>
-                                <button onclick="getData('<%=empl.getId()%>', '<%=empl.getFirstName()%>','<%=empl.getLastName()%>','<%=empl.getEmail()%>','<%=empl.getPhone()%>','<%=empl.getBirthPlace()%>','<%=empl.getBirthDate()%>','<%=empl.getGender()%>'
-                                    ,'<%=empl.getNationality()%>','<%=empl.getPhoto()%>','<%=empl.getReligion()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                <button onclick="getData('<%=empl.getId()%>', '<%=empl.getFirstName()%>', '<%=empl.getLastName()%>', '<%=empl.getEmail()%>', '<%=empl.getPhone()%>', '<%=empl.getBirthPlace()%>', '<%=empl.getBirthDate()%>', '<%=empl.getGender()%>'
+                                                , '<%=empl.getNationality()%>', '<%=empl.getPhoto()%>', '<%=empl.getReligion()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
                                     EDIT</button>
                             </td>
-                            <td><button onclick="" type=""class="btn btn-danger">HAPUS</button></td>
+                            <td><button onclick='setAlert("<%=empl.getId()%>")' class="btn btn-danger">HAPUS</button></td>
                         </tr>
                         <%
                             }
@@ -118,11 +123,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form class="form-horizontal" action="employeeservlet1" method="POST">
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputEmail4">ID</label>
-                                <input type="number" class="form-control" id="id" name="id" placeholder="First Name" value="">
+                                <input type="number" class="form-control" id="id" name="id" placeholder="ID" value="">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">First Name</label>
@@ -179,12 +184,8 @@
                                 <option value="Budha">Budha</option>
                             </select>
                         </div>
-                        
-
-
                         <div class="modal-footer">
-
-                            <button type="submit" class="btn btn-primary">Add Employee</button>
+                            <button type="submit" class="btn btn-primary" value="save">Save</button>
                         </div>
                     </form>
                 </div>
@@ -196,35 +197,72 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-     <script>
-            function getData(id, firstName, lastName, email, phone, birthPlace, birthDate, gender, nationality, photo, religion) {
-                document.getElementById("id").value = id;
-                document.getElementById("firstName").value = firstName;
-                document.getElementById("lastName").value = lastName;
-                document.getElementById("email").value = email;
-                document.getElementById("phone").value = phone;
-                document.getElementById("birthPlace").value = birthPlace;
-                document.getElementById("birthDate").value = birthDate;
-                document.getElementById("gender").value = gender;
-                document.getElementById("nationality").value = nationality;
-                document.getElementById("religion").value = religion;
-                document.getElementById("photo").value = photo;
-                console.log(regionid);
-                if (id !== '') {
-                    document.getElementById("id").readOnly = true;
-                } else {
-                    document.getElementById("id").readOnly = false;
-                }
-            }
-            </script>
+
+    <script>
+                                function getData(id, firstName, lastName, email, phone, birthPlace, birthDate, gender, nationality, photo, religion) {
+                                    document.getElementById("id").value = id;
+                                    document.getElementById("firstName").value = firstName;
+                                    document.getElementById("lastName").value = lastName;
+                                    document.getElementById("email").value = email;
+                                    document.getElementById("phone").value = phone;
+                                    document.getElementById("birthPlace").value = birthPlace;
+                                    document.getElementById("birthDate").value = birthDate;
+                                    document.getElementById("gender").value = gender;
+                                    document.getElementById("nationality").value = nationality;
+                                    document.getElementById("religion").value = religion;
+                                    document.getElementById("photo").value = photo;
+                                    console.log(regionid);
+                                    if (id !== '') {
+                                        document.getElementById("id").readOnly = true;
+                                    } else {
+                                        document.getElementById("id").readOnly = false;
+                                    }
+                                }
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#example').DataTable();
         });
+    </script>
+
+    <%
+        if (status != null) {
+            if (status.equalsIgnoreCase("Save data berhasil") || status.equalsIgnoreCase("Delete data berhasil")) {
+                out.println("<script type=\"text/javascript\">;");
+                out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
+                out.println("</script>;");
+            } else {
+                out.println("<script type=\"text/javascript\">;");
+                out.println("swal(\"GAGAL!\", \"" + status + "\", \"error\");");
+                out.println("</script>;");
+            }
+        }
+    %>
+
+    <script>
+        function setAlert(id) {
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "employeeservlet1?action=delete&&id=" + id;
+                } else {
+                    swal("Anda Membatalkan Mengahpus Data!");
+                }
+            });
+        }
     </script>
 </body>
 
 </html>
 <%
     }
+
+    session.removeAttribute("status");
+    session.removeAttribute("employees1");
 %>

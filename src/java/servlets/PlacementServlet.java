@@ -68,6 +68,12 @@ public class PlacementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action") + "";
+        String id = request.getParameter("id") + "";
+        if (action.equals("delete")) {
+            status = ipc.delete(id);
+            request.getSession().setAttribute("status", status);
+        }
         processRequest(request, response);
     }
 
@@ -82,6 +88,17 @@ public class PlacementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id");
+        String startdate = request.getParameter("startdate");
+        String enddate = request.getParameter("enddate");
+        String postion = request.getParameter("postion");
+        String department = request.getParameter("department");
+        String participant = request.getParameter("participant");
+        String client = request.getParameter("client");
+        
+        status = ipc.save(id, startdate, enddate, postion, department, client, participant);
+        request.getSession().setAttribute("status", status);
+        
         processRequest(request, response);
     }
 

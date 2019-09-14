@@ -61,4 +61,18 @@ public class ParticipantController implements IParticiantController {
         
         return result;
     }
+
+    @Override
+    public String delete(String id) {
+        String result = "";
+        
+        Participant participant = igdao.getById(id);
+        if(igdao.saveOrDelete(participant, false)){
+            result = "Data Berhasil Dihapus";
+        }else {
+            result = "Data Gagal Dihapus";
+        }
+        
+        return result;
+    }
 }

@@ -74,7 +74,7 @@ public class ClassController implements IClassController {
   
     public String delete(String id){
         String result = "";
-        Class kelas = new Class(id);
+        Class kelas = igdao.getById(id);
         if(igdao.saveOrDelete(kelas, false)){
             result = "Data Berhasil Dihapus";
         }

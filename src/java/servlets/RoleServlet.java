@@ -33,6 +33,7 @@ public class RoleServlet extends HttpServlet {
     private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
     private IRoleController irc = new RoleController(factory);
     private IEmployeeController iec = new EmployeeController(factory);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,6 +66,12 @@ public class RoleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action") + "";
+        String id = request.getParameter("id") + "";
+        if (action.equals("delete")) {
+            status = irc.delete(id);
+            request.getSession().setAttribute("status", status);
+        }
         processRequest(request, response);
     }
 
@@ -83,11 +90,8 @@ public class RoleServlet extends HttpServlet {
         String role_name = request.getParameter("role_name");
         
         status = irc.save(role_id, role_name);
-        if (status.equalsIgnoreCase("Data Berhasil Disimpan")) {
-            request.getSession().setAttribute("status",status);
-        } else {
-            request.getSession().setAttribute("status",status);
-        }
+        request.getSession().setAttribute("status", status);
+
         processRequest(request, response);
     }
 
