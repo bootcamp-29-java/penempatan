@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Client;
+import models.Placement;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -36,6 +38,7 @@ public class PlacementServlet extends HttpServlet {
     private IPlacementController ipc = new PlacementController(factory);
     private IParticiantController ipac = new ParticipantController(factory);
     private IGeneralDAO<Client> igdao = new GeneralDAO<>(factory, Client.class);
+    private GenerateId<Placement> generateId = new GenerateId<>(factory, Placement.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,6 +55,7 @@ public class PlacementServlet extends HttpServlet {
             request.getSession().setAttribute("placements", ipc.getAll());
             request.getSession().setAttribute("participants", ipac.getAll());
             request.getSession().setAttribute("clients", igdao.getAll());
+//            request.getSession().setAttribute("genPId", generateId.genId());
             response.sendRedirect("placement.jsp");
         }
     }

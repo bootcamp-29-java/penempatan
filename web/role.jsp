@@ -12,6 +12,8 @@
     List<Role> roles = (List<Role>) session.getAttribute("roles");
     List<Employee> employees = (List<Employee>) session.getAttribute("employees");
     String status = (String) session.getAttribute("status");
+    String generateIdERole = (String) session.getAttribute("generateIdERole");
+    String generateIdRole = (String) session.getAttribute("generateIdRole");
     out.print(status);
 
     if (logSession == null) {
@@ -41,10 +43,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Input New Role</h5>
                     <p class="card-text">You can input new role data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
+                    <button onclick="getDataERole('<%=generateIdERole%>','','')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
                         Add Employee Role   
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
+                    <button onclick="getDataRole('<%=generateIdRole%>','')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
                         Add Role   
                     </button>
                 </div>
@@ -214,7 +216,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="inputName">Name</label>
-                                    <input type="text" class="form-control" id="nameRole" name="role_name" placeholder="Role Nmae" value="">
+                                    <input type="text" class="form-control" id="nameRole" name="role_name" placeholder="Role Name" value="">
                                 </div>
 
                             </div>
@@ -324,4 +326,6 @@
     session.removeAttribute("roles");
     session.removeAttribute("employees");
     session.removeAttribute("employeesRole");
+    session.removeAttribute("generateIdERole");
+    session.removeAttribute("generateIdRole");
 %>

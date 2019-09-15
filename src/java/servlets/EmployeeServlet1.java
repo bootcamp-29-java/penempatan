@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Employee;
 import org.hibernate.SessionFactory;
 import tools.AllMethod;
 import tools.GenerateId;
@@ -32,6 +33,7 @@ public class EmployeeServlet1 extends HttpServlet {
     private SessionFactory factory = HibernateUtil.getSessionFactory();
     private IEmployeeController iec = new EmployeeController(factory);
     private IAccountController iac = new AccountController(factory);
+    private GenerateId<Employee> generateId = new GenerateId<>(factory, Employee.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,7 +49,7 @@ public class EmployeeServlet1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("employees1", iec.getAll());
-            request.getSession().setAttribute("genId", GenerateId.class);
+            request.getSession().setAttribute("genId", generateId.genId());
             
             response.sendRedirect("employee.jsp");
         }

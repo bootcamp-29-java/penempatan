@@ -14,6 +14,7 @@
 <%
     List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<Employee> employees = (List<Employee>) session.getAttribute("employees1");
+    String genId = (String) session.getAttribute("genId");
     String status = (String) session.getAttribute("status");
     out.print(status);
     if (logSession == null) {
@@ -51,7 +52,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Input Employee</h5>
                     <p class="card-text">You can input employee data in here</p>
-                    <button type="button" class="btn btn-primary" onclick="getData('', '', '', '', '', '', '', '', '', '', '')" data-toggle="modal" data-target="#addEmployee">
+                    <button type="button" class="btn btn-primary" onclick="getData('<%=genId%>', '', '', '', '', '', '', '', '', '', '')" data-toggle="modal" data-target="#addEmployee">
                         Add Employee
                     </button>
                 </div>
@@ -265,4 +266,5 @@
 
     session.removeAttribute("status");
     session.removeAttribute("employees1");
+    session.removeAttribute("genId");
 %>

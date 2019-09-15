@@ -118,9 +118,10 @@ public class Testing {
 //        for (EmployeeRole employeeRole : ierc.getTrainer()) {
 //            System.out.println(employeeRole.getEmployee().getFirstName());
 //        }
-
-        IAccountController iac = new AccountController(factory);
-        System.out.println(iac.createAccount("105", "Mustofa98", "", "-1", ""));
+//        IAccountController iac = new AccountController(factory);
+//        System.out.println(iac.createAccount("105", "Mustofa98", "", "-1", ""));
+        GenerateId<EmployeeRole> generateId = new GenerateId<>(factory, EmployeeRole.class);
+        System.out.println(generateId.genId());
     }
 
 }

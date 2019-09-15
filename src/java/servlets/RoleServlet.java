@@ -18,7 +18,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.EmployeeRole;
+import models.Role;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -33,6 +36,8 @@ public class RoleServlet extends HttpServlet {
     private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
     private IRoleController irc = new RoleController(factory);
     private IEmployeeController iec = new EmployeeController(factory);
+    private GenerateId<Role> generateId = new GenerateId<>(factory, Role.class);
+    private GenerateId<EmployeeRole> generateEId = new GenerateId<>(factory, EmployeeRole.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,6 +55,8 @@ public class RoleServlet extends HttpServlet {
             request.getSession().setAttribute("employeesRole", ierc.getAll());
             request.getSession().setAttribute("roles", irc.getAll());
             request.getSession().setAttribute("employees", iec.getAll());
+            request.getSession().setAttribute("generateIdRole", generateId.genId());
+            request.getSession().setAttribute("generateIdERole", generateEId.genId());
             response.sendRedirect("role.jsp");
         }
     }
