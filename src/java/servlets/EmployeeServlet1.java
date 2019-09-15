@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.SessionFactory;
 import tools.AllMethod;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -46,6 +47,8 @@ public class EmployeeServlet1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("employees1", iec.getAll());
+            request.getSession().setAttribute("genId", GenerateId.class);
+            
             response.sendRedirect("employee.jsp");
         }
     }

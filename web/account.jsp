@@ -13,7 +13,7 @@
 <%
     List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<Account> accounts = (List<Account>) session.getAttribute("accounts");
-    String status = (String) session.getAttribute("status2");
+    String status = (String) session.getAttribute("status");
     out.print(status);
     if (logSession == null) {
         out.print(logSession);
@@ -88,7 +88,7 @@
 
         <%
             if (status != null) {
-                if (status.equalsIgnoreCase("Login Berhasil") || status.equalsIgnoreCase("Save data berhasil")) {
+                if (status.equalsIgnoreCase("Login Berhasil") || status.equalsIgnoreCase("Save data berhasil") || status.equalsIgnoreCase("Email Berhasil Dikirimkan")) {
                     out.println("<script type=\"text/javascript\">;");
                     out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
                     out.println("</script>;");
@@ -123,6 +123,6 @@
 <%
     }
 
-    session.removeAttribute("status2");
+    session.removeAttribute("status");
     session.removeAttribute("accounts");
 %>

@@ -172,7 +172,7 @@
 
         <%
             if (status != null) {
-                if (status.equalsIgnoreCase("Login Berhasil") || status.equalsIgnoreCase("Save data berhasil")) {
+                if (status.equalsIgnoreCase("Login Berhasil") || status.equalsIgnoreCase("Save data berhasil") || status.equalsIgnoreCase("Email Berhasil Dikirimkan")) {
                     out.println("<script type=\"text/javascript\">;");
                     out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
                     out.println("</script>;");
@@ -205,9 +205,9 @@
 </html>
 
 <%
+    session.removeAttribute("status");
     }
 
-    session.removeAttribute("status");
     session.removeAttribute("employees");
     session.removeAttribute("employeeId");
 %>
