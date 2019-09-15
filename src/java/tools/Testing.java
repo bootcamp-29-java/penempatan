@@ -5,6 +5,7 @@
  */
 package tools;
 
+import controllers.AccountController;
 import controllers.EmployeeController;
 import controllers.EmployeeRoleController;
 import controllers.InterviewController;
@@ -15,6 +16,7 @@ import controllers.RoleController;
 import daos.LoginRegisterDAO;
 import daos.EmployeeRoleDAO;
 import daos.GeneralDAO;
+import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
 import icontrollers.IEmployeeRoleController;
 import icontrollers.IInterviewController;
@@ -112,10 +114,13 @@ public class Testing {
 //        System.out.println(irc.delete("5"));
 //        IEmployeeRoleController irc = new EmployeeRoleController(factory);
 //        System.out.println(irc.delete("39"));
-        IEmployeeRoleController ierc = new EmployeeRoleController(factory);
-        for (EmployeeRole employeeRole : ierc.getTrainer()) {
-            System.out.println(employeeRole.getEmployee().getFirstName());
-        }
+//        IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+//        for (EmployeeRole employeeRole : ierc.getTrainer()) {
+//            System.out.println(employeeRole.getEmployee().getFirstName());
+//        }
+
+        IAccountController iac = new AccountController(factory);
+        System.out.println(iac.createAccount("105", "Mustofa98", "", "-1", ""));
     }
 
 }

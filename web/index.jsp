@@ -12,7 +12,7 @@
     List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     String employeeId = (String) session.getAttribute("employeeId");
     List<Employee> employees = (List<Employee>) session.getAttribute("employees");
-    String status = (String) session.getAttribute("status2");
+    String status = (String) session.getAttribute("status");
     out.print(status);
     if (logSession == null) {
         out.print(logSession);
@@ -36,7 +36,7 @@
     </head>
     <body>
         <!-- Pemanggilan-->
-        <div class="container">
+<!--        <div class="container">
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Employee Account</h5>
                 <div class="card-body">
@@ -48,59 +48,63 @@
                 </div>
             </div>
             <br>
-            <div class="card w-100">
-                <h5 class="card-header">List Employee Account</h5>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Birth Place</th>
-                                <th scope="col">Birth Date</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Nationality</th>
-                                <th scope="col">Photo</th>
-                                <th scope="col">Religion</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                for (Employee empl : employees) {
-                            %>
-                            <tr>
-                                <td scope="row"><%=empl.getId()%></td>
-                                <td scope="row"><%=empl.getFirstName()%></td>
-                                <td scope="row"><%=empl.getLastName()%></td>
-                                <td scope="row"><%=empl.getEmail()%></td>
-                                <td scope="row"><%=empl.getBirthPlace()%></td>
-                                <td scope="row"><%=empl.getBirthDate()%></td>
-                                <td scope="row"><%=empl.getGender()%></td>
-                                <td scope="row"><%=empl.getNationality()%></td>
-                                <td scope="row"><%=empl.getPhoto()%></td>
-                                <td scope="row"><%=empl.getReligion()%></td>
-                                <td scope="row"><%=empl.getPhone()%></td>
-                            </tr>
-                            <%
-                                }
-                            %>
-                        </tbody>
-                    </table>
-                    <!--DATA TABLE HERE-->
-                </div>
+        </div>-->
+        <div class="card w-100">
+            <h5 class="card-header">List Employee Account</h5>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Birth Place</th>
+                            <th scope="col">Birth Date</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Nationality</th>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Religion</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Account Status</th>
+                            <th scope="col">Create Account</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Employee empl : employees) {
+                        %>
+                        <tr>
+                            <td scope="row"><%=empl.getId()%></td>
+                            <td scope="row"><%=empl.getFirstName()%></td>
+                            <td scope="row"><%=empl.getLastName()%></td>
+                            <td scope="row"><%=empl.getEmail()%></td>
+                            <td scope="row"><%=empl.getBirthPlace()%></td>
+                            <td scope="row"><%=empl.getBirthDate()%></td>
+                            <td scope="row"><%=empl.getGender()%></td>
+                            <td scope="row"><%=empl.getNationality()%></td>
+                            <td scope="row"><%=empl.getPhoto()%></td>
+                            <td scope="row"><%=empl.getReligion()%></td>
+                            <td scope="row"><%=empl.getPhone()%></td>
+                            <%String statusAccount = (empl.getAccount() == null) ? "Belum Punya Akun" : empl.getAccount().getStatus().getName();%>
+                            <td scope="row"><%=statusAccount%></td>
+                            <td><button onclick='setAlertKirim("<%=empl.getId()%>","<%=empl.getEmail()%>","<%=empl.getFirstName()%>","<%=empl.getLastName()%>")' type="button" class="btn btn-primary" data-toggle="" data-target="" <%if (!statusAccount.equals("Belum Punya Akun")) {%> disabled <% } %> >Send Email</button></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <!--DATA TABLE HERE-->
             </div>
-
         </div>
+
+
         <!-- Button trigger modal -->
 
 
         <!-- Modal -->
-        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+<!--        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -153,7 +157,7 @@
                                     <option value="WNA">WNA</option>
                                 </select>
                             </div>
-                                
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Create Account</button>
@@ -162,7 +166,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -179,6 +183,24 @@
                 }
             }
         %>
+
+        <script>
+            function setAlertKirim(id, email, first, last) {
+                swal({
+                    title: "Kirim Email Verifikasi Account?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Mengirim!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "registerservlet?action=sendEmail&&id=" + id + "&&email=" + email + "&&firstName=" + first + "&&lastName=" + last;
+                    } else {
+                        swal("Anda Membatalkan Mengirim Email!");
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
 

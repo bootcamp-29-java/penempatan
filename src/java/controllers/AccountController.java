@@ -14,6 +14,7 @@ import daos.GeneralDAO;
 import idaos.IGeneralDAO;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import models.Account;
 import models.Employee;
 import models.Status;
@@ -58,6 +59,11 @@ public class AccountController implements IAccountController{
         }
 
         return result;
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return igdao.getAll();
     }
 
 }

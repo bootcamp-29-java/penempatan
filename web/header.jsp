@@ -55,6 +55,14 @@
                             <a class="dropdown-item" href="client.jsp">Client</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Data Account
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="account.jsp">Reset Password</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <a class="btn btn-danger" onClick="logout()" href="#">Logout</a>

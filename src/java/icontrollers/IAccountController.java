@@ -5,6 +5,9 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.Account;
+
 /**
  *
  * @author Lenovo
@@ -12,5 +15,5 @@ package icontrollers;
 public interface IAccountController {
 
     String createAccount(String id, String password, String token, String status, String verif_time);
-    
+    List<Account> getAll();
 }
