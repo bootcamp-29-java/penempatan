@@ -120,8 +120,12 @@ public class Testing {
 //        }
 //        IAccountController iac = new AccountController(factory);
 //        System.out.println(iac.createAccount("105", "Mustofa98", "", "-1", ""));
-        GenerateId<EmployeeRole> generateId = new GenerateId<>(factory, EmployeeRole.class);
-        System.out.println(generateId.genId());
+//        GenerateId<EmployeeRole> generateId = new GenerateId<>(factory, EmployeeRole.class);
+//        System.out.println(generateId.genId());
+        IInterviewController iic = new InterviewController(factory);
+//        System.out.println(iic.save("3", "2017-10-11", "08:00", "Gedung pusat Mitsubishi Lantai 18", "Public Relation", "Bpk. Affan", "1", "132", "9"));
+//        Date dates= new SimpleDateFormat("yyyy-MM-dd").parse("2017-10-11");
+//        System.out.println(dates);
     }
 
 }

@@ -47,12 +47,19 @@ public class InterviewController implements IInterviewController {
     
     public String save(String id, String date, String time, String location, String department,String pic,String is_accepted, String participant, String client){
         String reesult ="";
+        boolean acc=false;
         
         Participant participant_1 = prdao.getById(participant);
         Client client_1=cldao.getById(client);
+        if(is_accepted.contains("1")){
+            acc = true;
+        }else {
+            acc = false;
+        }
+        
         try {
-            Date dates= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(date);
-            Date times = new SimpleDateFormat("HH:mm:ss").parse(time);
+            Date dates= new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            Date times = new SimpleDateFormat("HH:mm").parse(time);
             Interview interview = new Interview();
             interview.setId(id);
             interview.setDate(dates);
@@ -60,7 +67,7 @@ public class InterviewController implements IInterviewController {
             interview.setLocation(location);
             interview.setDepartment(department);
             interview.setPic(pic);
-            interview.setIsAccepted(Boolean.FALSE);
+            interview.setIsAccepted(acc);
             interview.setParticipant(participant_1);
             interview.setClient(client_1);
             if (igdao.saveOrDelete(interview, true)) {
@@ -74,5 +81,18 @@ public class InterviewController implements IInterviewController {
         }
         
         return reesult;
+    }
+
+    @Override
+    public String delete(String id) {
+        String result = "";
+        Interview interview = igdao.getById(id);
+        if(igdao.saveOrDelete(interview, false)){
+            result = "Data Berhasil Dihapus";
+        }else{
+            result = "Data Gagal Dihapus";
+        }
+        
+        return result;
     }
 }

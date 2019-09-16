@@ -26,8 +26,8 @@ import tools.HibernateUtil;
  *
  * @author ASUS
  */
-@WebServlet(name = "InterviewServlet", urlPatterns = {"/interviewservlet"})
-public class InterviewServlet extends HttpServlet {
+@WebServlet(name = "AcceptedServlet", urlPatterns = {"/acceptedservlet"})
+public class AcceptedServlet extends HttpServlet {
 
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -48,9 +48,6 @@ public class InterviewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("interviews", iic.getAll());
-            request.getSession().setAttribute("participants", ipac.getAll());
-            request.getSession().setAttribute("clients", igdao.getAll());
             response.sendRedirect("interview.jsp");
         }
     }
@@ -67,12 +64,6 @@ public class InterviewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action") + "";
-        String id = request.getParameter("id") + "";
-        if (action.equals("delete")) {
-            status = iic.delete(id);
-            request.getSession().setAttribute("status", status);
-        }
         processRequest(request, response);
     }
 
@@ -87,16 +78,21 @@ public class InterviewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String date = request.getParameter("date");
-        String time = request.getParameter("time");
-        String location = request.getParameter("location");
-        String department = request.getParameter("department");
-        String pic = request.getParameter("pic");
-        String participant = request.getParameter("participant");
-        String client = request.getParameter("client");
+        String idAcc = request.getParameter("idAcc");
+        String dateAcc = request.getParameter("dateAcc");
+        String timeAcc = request.getParameter("timeAcc");
+        String locationAcc = request.getParameter("locationAcc");
+        String departmentAcc = request.getParameter("departmentAcc");
+        String picAcc = request.getParameter("picAcc");
+        String participantAcc = request.getParameter("participantAcc");
+        String clientAcc = request.getParameter("clientAcc");
+        String accept = request.getParameter("accept");
 
-        status = iic.save(id, date, time, location, department, pic, "0", participant, client);
+        if ("true".equals(accept)) {
+            status = iic.save(idAcc, dateAcc, timeAcc, locationAcc, departmentAcc, picAcc, "1", participantAcc, clientAcc);
+        } else {
+            status = iic.save(idAcc, dateAcc, timeAcc, locationAcc, departmentAcc, picAcc, "0", participantAcc, clientAcc);
+        }
         request.getSession().setAttribute("status", status);
 
         processRequest(request, response);

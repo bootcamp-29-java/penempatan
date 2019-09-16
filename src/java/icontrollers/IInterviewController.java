@@ -20,4 +20,5 @@ public interface IInterviewController {
 
     String save(String id, String date, String time, String location, String department, String pic, String is_accepted, String participant, String client);
     
+    String delete(String id);
 }
