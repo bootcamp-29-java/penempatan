@@ -44,7 +44,7 @@
             <div class="card ">
                 <h5 class="card-header">List Employee Role</h5>
                 <div class="card-body">
-                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <table id="example" class="table table-hover table-sm table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>

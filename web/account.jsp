@@ -36,51 +36,53 @@
     </head>
     <body>
         <!-- Pemanggilan-->
-<!--        <div class="container">
-            <div class="card w-100" style="margin-top: 20px;">
-                <h5 class="card-header">Create Employee Account</h5>
+        <!--        <div class="container">
+                    <div class="card w-100" style="margin-top: 20px;">
+                        <h5 class="card-header">Create Employee Account</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Input New Employee</h5>
+                            <p class="card-text">You can input new employee data in here</p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                Launch demo modal
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                </div>-->
+        <div class="container">
+            <div class="card w-100">
+                <h5 class="card-header">List Account</h5>
                 <div class="card-body">
-                    <h5 class="card-title">Input New Employee</h5>
-                    <p class="card-text">You can input new employee data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
-                        Launch demo modal
-                    </button>
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Status Account</th>
+                                <th scope="col">Reset Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                for (Account empl : accounts) {
+                            %>
+                            <tr>
+                                <td scope="row"><%=empl.getId()%></td>
+                                <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
+                                <td scope="row"><%=empl.getEmployee().getLastName()%></td>
+                                <td scope="row"><%=empl.getEmployee().getEmail()%></td>
+                                <td scope="row"><%=empl.getStatus().getName()%></td>
+                                <td><button onclick='setAlert("<%=empl.getId()%>", "<%=empl.getEmployee().getEmail()%>", "<%=empl.getEmployee().getFirstName()%>", "<%=empl.getEmployee().getLastName()%>")' type="button" class="btn btn-primary" data-toggle="" data-target="">Send Email</button></td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                    <!--DATA TABLE HERE-->
                 </div>
-            </div>
-            <br>
-        </div>-->
-        <div class="card w-100">
-            <h5 class="card-header">List Account</h5>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Status Account</th>
-                            <th scope="col">Reset Password</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            for (Account empl : accounts) {
-                        %>
-                        <tr>
-                            <td scope="row"><%=empl.getId()%></td>
-                            <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
-                            <td scope="row"><%=empl.getEmployee().getLastName()%></td>
-                            <td scope="row"><%=empl.getEmployee().getEmail()%></td>
-                            <td scope="row"><%=empl.getStatus().getName()%></td>
-                            <td><button onclick='setAlert("<%=empl.getId()%>","<%=empl.getEmployee().getEmail()%>","<%=empl.getEmployee().getFirstName()%>","<%=empl.getEmployee().getLastName()%>")' type="button" class="btn btn-primary" data-toggle="" data-target="">Send Email</button></td>
-                        </tr>
-                        <%
-                            }
-                        %>
-                    </tbody>
-                </table>
-                <!--DATA TABLE HERE-->
             </div>
         </div>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -101,21 +103,21 @@
         %>
 
         <script>
-            function setAlert(id, email, first, last) {
-                swal({
-                    title: "Kirim Email Reset Password?",
-                    text: "Tekan Ok, Jika Anda Yakin Untuk Mengirim!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        window.location.href = "accountservlet?action=sendReset&&id=" + id + "&&email=" + email + "&&firstName=" + first + "&&lastName=" + last;
-                    } else {
-                        swal("Anda Membatalkan Mengirim Email!");
-                    }
-                });
-            }
+                                function setAlert(id, email, first, last) {
+                                    swal({
+                                        title: "Kirim Email Reset Password?",
+                                        text: "Tekan Ok, Jika Anda Yakin Untuk Mengirim!",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true
+                                    }).then((willDelete) => {
+                                        if (willDelete) {
+                                            window.location.href = "accountservlet?action=sendReset&&id=" + id + "&&email=" + email + "&&firstName=" + first + "&&lastName=" + last;
+                                        } else {
+                                            swal("Anda Membatalkan Mengirim Email!");
+                                        }
+                                    });
+                                }
         </script>
     </body>
 </html>

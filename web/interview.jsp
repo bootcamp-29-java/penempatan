@@ -60,7 +60,7 @@
         <div class="card w-100">
             <h5 class="card-header">List Employee Role</h5>
             <div class="card-body">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <table id="example" class="table table-hover table-sm table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -96,7 +96,7 @@
                                     EDIT</button>
                             </td>
                             <td><button onclick='setAlert("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
-                            <td><button onclick="" type=""class="btn btn-primary">Send Email</button></td>
+                            <td><button onclick='setAlertSendInvitation("<%=empl.getId()%>")' type=""class="btn btn-primary">Send Email</button></td>
                             <td>
                                 <button onclick="getDataAcc('<%=empl.getId()%>', '<%=empl.getDate()%>', '<%=empl.getTime()%>', '<%=empl.getLocation()%>', '<%=empl.getDepartment()%>',
                                                 '<%=empl.getPic()%>', '<%=empl.getParticipant().getId()%>', '<%=empl.getClient().getId()%>', '<%=empl.getIsAccepted()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccepted">Set</button>
@@ -316,6 +316,24 @@
                         window.location.href = "interviewservlet?action=delete&&id=" + id;
                     } else {
                         swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
+        
+        <script>
+            function setAlertSendInvitation(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Mengirim Undangan Interview!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "invitationservlet?id="+id;
+                    } else {
+                        swal("Anda Membatalkan Mengirim Undangan!");
                     }
                 });
             }

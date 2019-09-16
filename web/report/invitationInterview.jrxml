@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="e108d083-65a6-43f1-a0a5-870afdbdcb6e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_tr_interview.`date` AS tb_tr_interview_date,
+     tb_tr_interview.`time` AS tb_tr_interview_time,
+     tb_tr_interview.`location` AS tb_tr_interview_location,
+     tb_tr_interview.`department` AS tb_tr_interview_department,
+     tb_tr_interview.`pic` AS tb_tr_interview_pic,
+     tb_tr_interview.`participant` AS tb_tr_interview_participant,
+     tb_tr_interview.`client` AS tb_tr_interview_client,
+     tb_m_employee.`first_name` AS tb_m_employee_first_name,
+     tb_m_employee.`last_name` AS tb_m_employee_last_name,
+     CONCAT (tb_m_employee.`first_name`, ' ', tb_m_employee.`last_name`) AS tb_m_employee_name,
+     CONCAT (tb_tr_interview.`id`, '/', tb_tr_interview.`client`, '/', YEAR(tb_tr_interview.`date`)) AS no_surat,
+     tb_m_employee.`id` AS tb_m_employee_id,
+     tb_m_client.`id` AS tb_m_client_id,
+     tb_m_client.`name` AS tb_m_client_name
+FROM
+     `tb_m_employee` tb_m_employee INNER JOIN `tb_tr_interview` tb_tr_interview ON tb_m_employee.`id` = tb_tr_interview.`participant`
+     INNER JOIN `tb_m_client` tb_m_client ON tb_tr_interview.`client` = tb_m_client.`id`
+WHERE
+     tb_tr_interview.`id` = $P{id}]]>
+	</queryString>
+	<field name="tb_tr_interview_date" class="java.sql.Date"/>
+	<field name="tb_tr_interview_time" class="java.sql.Time"/>
+	<field name="tb_tr_interview_location" class="java.lang.String"/>
+	<field name="tb_tr_interview_department" class="java.lang.String"/>
+	<field name="tb_tr_interview_pic" class="java.lang.String"/>
+	<field name="tb_tr_interview_participant" class="java.lang.String"/>
+	<field name="tb_tr_interview_client" class="java.lang.String"/>
+	<field name="tb_m_employee_first_name" class="java.lang.String"/>
+	<field name="tb_m_employee_last_name" class="java.lang.String"/>
+	<field name="tb_m_employee_name" class="java.lang.String"/>
+	<field name="no_surat" class="java.lang.String"/>
+	<field name="tb_m_employee_id" class="java.lang.String"/>
+	<field name="tb_m_client_id" class="java.lang.String"/>
+	<field name="tb_m_client_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement x="453" y="2" width="81" height="66" uuid="39f7a70b-fbc8-4599-90af-4c91bfdab989"/>
+				<imageExpression><![CDATA["E:\\Kerjaan Metrodata Group\\Project 2\\Penempatan\\web\\image\\metrodata.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="0" width="90" height="79" uuid="10e171a8-7505-47e5-b248-786e77fba3f1"/>
+				<imageExpression><![CDATA["E:\\Kerjaan Metrodata Group\\Project 2\\Penempatan\\web\\image\\mii.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="0" width="340" height="34" uuid="477f6e25-6bc1-4e93-9658-606282eb5c38"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[PT. Mitra Integrasi Informatika]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="35" width="341" height="33" uuid="fcb8207d-c4b4-42f2-a8aa-61828516cdb6"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[APL Tower Lantai 37, Jl. Letjen S. Parman Kav. 28, Tj. Duren Sel.Jakarta Barat, Jakarta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="79" width="534" height="1" uuid="3e21f450-c00b-4d0a-9d9c-83b09830bd93"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="45" height="20" uuid="efc8f9b8-6466-4bb0-a150-84053b022ea0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[No	: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="21" width="188" height="18" uuid="96833e4a-89b5-45f6-a4af-3d37d31b540b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hal	: Panggilan Interview]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="39" width="60" height="18" uuid="f0e3bf18-d850-403c-80b9-b8920409ced1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Lamp	: -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="0" width="100" height="20" uuid="4992598b-aca8-4177-bf90-499da9c7111e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_surat}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="348" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="60" height="22" uuid="87aa1d0b-dce8-4b17-864f-23d057ef0969"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Kepada,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="30" height="22" uuid="03919127-5fa9-4613-84c6-73d2c30972b8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Yth, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="52" width="73" height="24" uuid="0875cf0c-5e87-4dc9-9ddb-e6a863058d13"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Di Tempat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="279" width="534" height="28" uuid="72b8c827-806e-424c-b677-2e276ad8eb68"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Diharapkan untuk kedatangan Saudara/i untuk menghadiri interview pada perusahaan tersebut.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="89" width="525" height="22" uuid="39307edb-3ecd-463f-9a6d-a21c081f6a7a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sehubungan dengan Surat Lamaran Pekerjaan Saudara/i untuk menjadi staf di perusahaan ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="144" width="535" height="25" uuid="7c5898c6-0f65-413d-a995-a3e13ca089bb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dengan ini kami mengundang Saudara/i untuk menghadiri sesi interview/wawancara pada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="174" width="90" height="24" uuid="a610c3a0-4b28-4bd5-885f-4afd22eda746"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tanggal	: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="198" width="90" height="23" uuid="ad508e73-926d-435b-8786-4d486205aa66"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Waktu		: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="221" width="90" height="24" uuid="29e7435d-5f6e-4c59-ae7b-1c455713350f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tempat	: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="245" width="90" height="21" uuid="a59f7d02-9f13-4e18-8dc4-02ea56e7ce72"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[PIC		: ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="90" y="174" width="444" height="24" uuid="d8987ee2-0156-4b3c-97be-e4be7e3330cc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_interview_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement x="88" y="198" width="446" height="23" uuid="689013af-ca64-4a29-be70-246bb7e2cfdf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_interview_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="221" width="444" height="24" uuid="e93a38e8-8d2b-4ab1-b109-b621db8b7641"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_interview_location}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="245" width="446" height="21" uuid="40adcacd-1cc4-4eaf-8c73-6aa1a89c77a7"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_interview_pic}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="26" width="495" height="22" uuid="9f3fd50a-150d-4a0d-a4ad-fd13ddfe2aaf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_employee_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="117" width="145" height="20" uuid="9d2b780d-d202-4d10-8218-ba879be98497"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_client_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="310" width="534" height="28" uuid="cb756c12-9b35-46c4-8a14-f9209db6f13f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Berikan usaha yang terbaik. Terimakasih.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="9" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="444" y="0" width="90" height="20" uuid="0656dc89-68f9-4574-8da5-84762700ca3c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hormat kami,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="75" width="90" height="20" uuid="cca6b3ab-3251-435f-ac8a-c219f16863ad"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ADD 2]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -28,7 +28,7 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -36,23 +36,23 @@
     </head>
     <body>
         <!-- Pemanggilan-->
-<!--        <div class="container">
-            <div class="card w-100" style="margin-top: 20px;">
-                <h5 class="card-header">Create Employee Account</h5>
-                <div class="card-body">
-                    <h5 class="card-title">Input New Employee</h5>
-                    <p class="card-text">You can input new employee data in here</p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
-                        Launch demo modal
-                    </button>
-                </div>
-            </div>
-            <br>
-        </div>-->
+        <!--        <div class="container">
+                    <div class="card w-100" style="margin-top: 20px;">
+                        <h5 class="card-header">Create Employee Account</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Input New Employee</h5>
+                            <p class="card-text">You can input new employee data in here</p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                Launch demo modal
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                </div>-->
         <div class="card w-100">
             <h5 class="card-header">List Employee Account</h5>
             <div class="card-body">
-                <table class="table">
+                <table class="table table-hover table-sm" id="example">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -88,7 +88,7 @@
                             <td scope="row"><%=empl.getPhone()%></td>
                             <%String statusAccount = (empl.getAccount() == null) ? "Belum Punya Akun" : empl.getAccount().getStatus().getName();%>
                             <td scope="row"><%=statusAccount%></td>
-                            <td><button onclick='setAlertKirim("<%=empl.getId()%>","<%=empl.getEmail()%>","<%=empl.getFirstName()%>","<%=empl.getLastName()%>")' type="button" class="btn btn-primary" data-toggle="" data-target="" <%if (!statusAccount.equals("Belum Punya Akun")) {%> disabled <% } %> >Send Email</button></td>
+                            <td><button onclick='setAlertKirim("<%=empl.getId()%>", "<%=empl.getEmail()%>", "<%=empl.getFirstName()%>", "<%=empl.getLastName()%>")' type="button" class="btn btn-primary" data-toggle="" data-target="" <%if (!statusAccount.equals("Belum Punya Akun")) {%> disabled <% } %> >Send Email</button></td>
                         </tr>
                         <%
                             }
@@ -104,71 +104,79 @@
 
 
         <!-- Modal -->
-<!--        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Create Employee Account</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+        <!--        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Create Employee Account</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="registerservlet" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="inputEmail4">ID</label>
+                                            <input type="number" class="form-control" id="id" name="id" placeholder="First Name" value="<%=employeeId%>">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputAddress">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="yourmail@example.com">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">Birth Place</label>
+                                            <input type="text" id="birthPlace" name="birthPlace" class="form-control" placeholder="Birth Place">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Birth Date</label>
+                                            <input type="date" id="birthDate" name="birthDate" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputState">Gender</label>
+                                        <select id="gender" name="gender" class="form-control">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputState">Nationality</label>
+                                        <select id="nationality" name="nationality" class="form-control">
+                                            <option value="WNI">WNI</option>
+                                            <option value="WNA">WNA</option>
+                                        </select>
+                                    </div>
+        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Create Account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form action="registerservlet" method="POST">
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputEmail4">ID</label>
-                                    <input type="number" class="form-control" id="id" name="id" placeholder="First Name" value="<%=employeeId%>">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="yourmail@example.com">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Birth Place</label>
-                                    <input type="text" id="birthPlace" name="birthPlace" class="form-control" placeholder="Birth Place">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Birth Date</label>
-                                    <input type="date" id="birthDate" name="birthDate" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputState">Gender</label>
-                                <select id="gender" name="gender" class="form-control">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputState">Nationality</label>
-                                <select id="nationality" name="nationality" class="form-control">
-                                    <option value="WNI">WNI</option>
-                                    <option value="WNA">WNA</option>
-                                </select>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Create Account</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+                </div>-->
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#example').DataTable();
+                                });
+        </script>
 
         <%
             if (status != null) {
@@ -205,7 +213,7 @@
 </html>
 
 <%
-    session.removeAttribute("status");
+        session.removeAttribute("status");
     }
 
     session.removeAttribute("employees");

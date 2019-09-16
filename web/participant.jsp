@@ -59,7 +59,7 @@
             <div class="card w-100">
                 <h5 class="card-header">List Participant</h5>
                 <div class="card-body">
-                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <table id="example" class="table table-hover table-sm table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
