@@ -96,7 +96,7 @@
                                     EDIT</button>
                             </td>
                             <td><button onclick='setAlert("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
-                            <td><button onclick='setAlertSendInvitation("<%=empl.getId()%>")' type=""class="btn btn-primary">Send Email</button></td>
+                            <td><button onclick='setAlertSendInvitation("<%=empl.getId()%>","<%=empl.getParticipant().getEmployee().getEmail()%>","<%=empl.getParticipant().getEmployee().getFirstName()%>")' type=""class="btn btn-primary">Send Email</button></td>
                             <td>
                                 <button onclick="getDataAcc('<%=empl.getId()%>', '<%=empl.getDate()%>', '<%=empl.getTime()%>', '<%=empl.getLocation()%>', '<%=empl.getDepartment()%>',
                                                 '<%=empl.getPic()%>', '<%=empl.getParticipant().getId()%>', '<%=empl.getClient().getId()%>', '<%=empl.getIsAccepted()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccepted">Set</button>
@@ -181,7 +181,7 @@
             </div>
         </div>
 
-                                
+
         <!--modal accepted-->
         <div class="modal fade" id="addAccepted" tabindex="-1" role="dialog" aria-labelledby="addAccepted" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -291,7 +291,7 @@
 
         <%
             if (status != null) {
-                if (status.equalsIgnoreCase("Data Berhasil Disimpan") || status.equalsIgnoreCase("Data Berhasil Dihapus")) {
+                if (status.equalsIgnoreCase("Data Berhasil Disimpan") || status.equalsIgnoreCase("Data Berhasil Dihapus") || status.equalsIgnoreCase("Email Berhasil Dikirimkan")) {
                     out.println("<script type=\"text/javascript\">;");
                     out.println("swal(\"Good job!\", \"" + status + "\", \"success\");");
                     out.println("</script>;");
@@ -320,9 +320,9 @@
                 });
             }
         </script>
-        
+
         <script>
-            function setAlertSendInvitation(id) {
+            function setAlertSendInvitation(id, email, firstName) {
                 swal({
                     title: "Apakah Anda Yakin?",
                     text: "Tekan Ok, Jika Anda Yakin Mengirim Undangan Interview!",
@@ -331,7 +331,7 @@
                     dangerMode: true
                 }).then((willDelete) => {
                     if (willDelete) {
-                        window.location.href = "invitationservlet?id="+id;
+                        window.location.href = "interviewservlet?action=sendInterview&&idInterview=" + id + "&&emailInterview=" + email + "&&firstNameInterview=" + firstName;
                     } else {
                         swal("Anda Membatalkan Mengirim Undangan!");
                     }
@@ -341,7 +341,7 @@
     </body>
 </html>
 <%
-    session.removeAttribute("status");
+        session.removeAttribute("status");
     }
 
     session.removeAttribute("interviews");

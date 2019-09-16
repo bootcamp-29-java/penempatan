@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Client;
 import org.hibernate.SessionFactory;
+import tools.AllMethod;
 import tools.HibernateUtil;
 
 /**
@@ -69,10 +70,22 @@ public class InterviewServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action") + "";
         String id = request.getParameter("id") + "";
+        
+        String idInterview = request.getParameter("idInterview") + "";
+        String emailInterview = request.getParameter("emailInterview") + "";
+        String firstNameInterview = request.getParameter("firstNameInterview") + "";
+        
+        
         if (action.equals("delete")) {
             status = iic.delete(id);
             request.getSession().setAttribute("status", status);
         }
+        if(action.equals("sendInterview")){
+            AllMethod.sendInterview(emailInterview, firstNameInterview, idInterview);
+            status = "Email Berhasil Dikirimkan";
+            request.getSession().setAttribute("status", status);
+        }
+        
         processRequest(request, response);
     }
 
