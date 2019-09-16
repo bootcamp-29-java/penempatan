@@ -16,7 +16,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Batch;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -29,6 +31,7 @@ public class BatchServlet extends HttpServlet {
     String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
     private IBatchController ib = new BatchControler(factory);
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

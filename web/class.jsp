@@ -11,13 +11,14 @@
     List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
     List<EmployeeRole> trainers = (List<EmployeeRole>) session.getAttribute("trainers");
     String status = (String) session.getAttribute("status");
+    String genId = (String) session.getAttribute("genBId");
     out.println(status);
 
     if (logSession == null) {
         out.print(logSession);
         out.println("<script>alert('Anda belum login!')</script>");
         out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
-    } else if (cl == null || bc == null) {
+    } else if (cl == null || bc == null || lessons == null || trainers == null || genId == null) {
         response.sendRedirect("classservlet");
     } else {
 
@@ -27,13 +28,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     </head>
 
     <body>
@@ -47,7 +57,7 @@
                     <button type="button" onclick="getData('', '', '', '')" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
                         Add Class    
                     </button>
-                    <button type="button" onclick="getDataBatch('')" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
+                    <button type="button" onclick="getDataBatch('<%=genId%>')" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
                         Add Batch    
                     </button>
                 </div>
@@ -57,11 +67,11 @@
             <br>
 
             <div class="card w-100">
-                <h5 class="card-header">List Class</h5>
+                <h5 class="card-header text-center  ">List Class</h5>
                 <div class="card-body">
                     <table id="example" class="table table-hover table-sm table-bordered" style="width:100%">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th scope="col">ID</th>
                                 <th scope="col">Lesson</th>
                                 <th scope="col">Batch</th>
@@ -80,11 +90,11 @@
                                 <td scope="row"><%=empl.getBatch().getId()%></td>
                                 <td scope="row"><%=empl.getTrainer().getFirstName()%></td>
 
-                                <td>
+                                <td class="text-center">
                                     <button onclick="getData('<%=empl.getLesson().getId()%>', '<%=empl.getBatch().getId()%>', '<%=empl.getTrainer().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
-                                        EDIT</button>
+                                       <i class="far fa-edit"></i> EDIT</button>
                                 </td>
-                                <td><button onclick='setAlertClass("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
+                                <td class="text-center"><button onclick='setAlertClass("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -101,7 +111,7 @@
 
 
             <div class="card w-100">
-                <h5 class="card-header">List Batch</h5>
+                <h5 class="card-header text-center">List Batch</h5>
                 <div class="card-body">
                     <table id="examplee" class="table table-striped table-bordered" style="width:100%">
                         <thead>
@@ -160,7 +170,7 @@
                             <div class="form-group">
                                 <label>Lesson</label>
                                 <select id="lesson" name="lesson_id" class="form-control">
-                                    <option ></option>
+                                    <option value="">-Pilih-</option>
                                     <%for (Lesson l : lessons) {%>
                                     <option value="<%=l.getId()%>" ><%=l.getId()%> - <%=l.getName()%></option>
                                     <% } %>
@@ -170,7 +180,7 @@
                             <div class="form-group">
                                 <label>Batch</label>
                                 <select id="batch" name="batch_id" class="form-control">
-                                    <option ></option>
+                                    <option value="">-Pilih-</option>
                                     <%for (Batch b : bc) {%>
                                     <option value="<%=b.getId()%>" ><%=b.getId()%></option>
                                     <% } %>
@@ -180,7 +190,7 @@
                             <div class="form-group">
                                 <label>Trainer</label>
                                 <select id="trainer" name="trainer_id" class="form-control">
-                                    <option ></option>
+                                    <option value="">-Pilih-</option>
                                     <%for (EmployeeRole t : trainers) {%>
                                     <option value="<%=t.getEmployee().getId()%>" ><%=t.getEmployee().getId()%> - <%=t.getEmployee().getFirstName()%></option>
                                     <% } %>
@@ -351,4 +361,5 @@
     session.removeAttribute("Batchs");
     session.removeAttribute("lessons");
     session.removeAttribute("trainers");
+    session.removeAttribute("genBId");
 %>

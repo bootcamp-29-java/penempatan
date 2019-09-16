@@ -14,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Client;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -26,13 +28,15 @@ public class ClientServlet extends HttpServlet {
 
     String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
-    IClientController cli = new ClientController(factory);
+    private IClientController cli = new ClientController(factory);
+    private GenerateId<Client> generateId = new GenerateId<>(factory, Client.class);
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("clients", cli.getall());
+            request.getSession().setAttribute("genCId", generateId.genId());
             response.sendRedirect("client.jsp");
         }
     }

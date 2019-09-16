@@ -20,7 +20,7 @@
         out.print(logSession);
         out.println("<script>alert('Anda belum login!')</script>");
         out.println("<script>window.location.href=\"admin/login.jsp\"</script>");
-    } else if (roles == null || employeesRole == null) {
+    } else if (roles == null || employeesRole == null || employees == null || generateIdERole == null || generateIdRole == null) {
         response.sendRedirect("roleservlet");
     } else {
 %>
@@ -29,11 +29,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Employee Role</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </head>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script></head>
 
     <body>
         <!--Card atas-->
@@ -46,7 +57,7 @@
                     <button onclick="getDataERole('<%=generateIdERole%>','','')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
                         Add Employee Role   
                     </button>
-                    <button onclick="getDataRole('<%=generateIdRole%>','')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
+                    <button onclick="getDataRole('<%=generateIdRole%>','')" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addRole">
                         Add Role   
                     </button>
                 </div>
@@ -54,7 +65,7 @@
             <br>
 
             <div class="card w-100">
-                <h5 class="card-header">List Employee Role</h5>
+                <h5 class="card-header text-center">List Employee Role</h5>
                 <div class="card-body">
                     <table id="example" class="table table-hover table-sm table-bordered" style="width:100%">
                         <thead>
@@ -76,11 +87,11 @@
                                 <td scope="row"><%=empl.getEmployee().getId()%></td>
                                 <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
                                 <td scope="row"><%=empl.getRole().getName()%></td>
-                                <td>
-                                    <button onclick="getDataERole('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole">
-                                        EDIT</button>
+                                <td class="text-center">
+                                    <button onclick="getDataERole('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole"><i class="far fa-edit"></i>
+                                         EDIT</button>
                                 </td>
-                                <td><button onclick='setAlertERole("<%=empl.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
+                                <td class="text-center"><button onclick='setAlertERole("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
                             </tr>
                             <%
                                 }
@@ -113,11 +124,11 @@
                             <tr>
                                 <td scope="row"><%=role.getId()%></td>
                                 <td scope="row"><%=role.getName()%></td>
-                                <td>
+                                <td class="text-center">
                                     <button onclick="getDataRole('<%=role.getId()%>', '<%=role.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRole">
-                                        EDIT</button>
+                                        <i class="far fa-edit"></i> EDIT</button>
                                 </td>
-                                <td><button onclick='setAlertRole("<%=role.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
+                                <td class="text-center"><button onclick='setAlertRole("<%=role.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
                             </tr>
                             <%
                                 }

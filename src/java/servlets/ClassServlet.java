@@ -22,7 +22,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Batch;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -37,6 +39,7 @@ public class ClassServlet extends HttpServlet {
     private IBatchController ib = new BatchControler(factory);
     private ILessonController ilc = new LessonController(factory);
     private IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+    private GenerateId<Batch> generateId = new GenerateId<>(factory, Batch.class);
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,6 +49,7 @@ public class ClassServlet extends HttpServlet {
             request.getSession().setAttribute("Batchs", ib.getall());
             request.getSession().setAttribute("lessons", ilc.getall());
             request.getSession().setAttribute("trainers", ierc.getTrainer());
+            request.getSession().setAttribute("genBId", generateId.genId());
             
             response.sendRedirect("class.jsp");
         }

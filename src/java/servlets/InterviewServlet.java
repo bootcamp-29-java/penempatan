@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Client;
+import models.Interview;
 import org.hibernate.SessionFactory;
 import tools.AllMethod;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -35,6 +37,7 @@ public class InterviewServlet extends HttpServlet {
     private IInterviewController iic = new InterviewController(factory);
     private IParticiantController ipac = new ParticipantController(factory);
     private IGeneralDAO<Client> igdao = new GeneralDAO<>(factory, Client.class);
+    private GenerateId<Interview> generateId = new GenerateId<>(factory, Interview.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,6 +55,7 @@ public class InterviewServlet extends HttpServlet {
             request.getSession().setAttribute("interviews", iic.getAll());
             request.getSession().setAttribute("participants", ipac.getAll());
             request.getSession().setAttribute("clients", igdao.getAll());
+            request.getSession().setAttribute("genId", generateId.genId());
             response.sendRedirect("interview.jsp");
         }
     }

@@ -47,14 +47,14 @@ import org.hibernate.SessionFactory;
  * @author Reza
  */
 public class Testing {
-    
+
     public static void show() {
         GeneralDAO<Employee> gdao = new GeneralDAO<>(HibernateUtil.getSessionFactory(), Employee.class);
         for (Employee employee : gdao.getAll()) {
             System.out.println(employee.getId() + " - " + employee.getFirstName());
         }
     }
-    
+
     public static void main(String[] args) throws ParseException, FileNotFoundException {
         SessionFactory factory = HibernateUtil.getSessionFactory();
 //        LoginRegisterDAO dao = new LoginRegisterDAO(factory);
@@ -126,7 +126,10 @@ public class Testing {
 //        System.out.println(iic.save("3", "2017-10-11", "08:00", "Gedung pusat Mitsubishi Lantai 18", "Public Relation", "Bpk. Affan", "1", "132", "9"));
 //        Date dates= new SimpleDateFormat("yyyy-MM-dd").parse("2017-10-11");
 //        System.out.println(dates);
-        AllMethod.sendInterview("mustofaalisahid@gmail.com", "mus", "31");
+//        AllMethod.sendInterview("mustofaalisahid@gmail.com", "mus", "31");
+        GenerateId<Employee> generateId = new GenerateId<>(factory, Employee.class);
+        String id = generateId.genId();
+        System.out.println(id);
     }
-    
+
 }

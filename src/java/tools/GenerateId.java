@@ -5,8 +5,11 @@
  */
 package tools;
 
+import java.util.ArrayList;
+import java.util.List;
 import models.Employee;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,6 +21,7 @@ import org.hibernate.criterion.Projections;
  * @author Reza
  */
 public class GenerateId<T> {
+
     private Session session;
     private Transaction transaction;
     private SessionFactory factory;
@@ -31,29 +35,27 @@ public class GenerateId<T> {
             e.printStackTrace();
         }
     }
-    
-    public String genId(){
-        String emp= "";
-        int id;
+
+    public String genId() {
+        T t = null;
+        String id = "";
+        int generate = 0;
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-            Criteria cb =  session.createCriteria(table.getClass());
-            ProjectionList projList = Projections.projectionList();
-            projList.add(Projections.max("id"));
-            //projList.add(Projections.countDistinct("description"));
-            emp =(String) cb.setProjection(projList).uniqueResult();
-            id = Integer.parseInt(emp)+1;
-            emp = String.valueOf(id);
+            Query querry = session.createQuery("select max(id+0) from " + table.getClass().getSimpleName());
+            t = (T) querry.uniqueResult();
+            id = t.toString();
+            generate = (Integer.parseInt(id))+1;
+            id = String.valueOf(generate);
         } catch (Exception e) {
             e.printStackTrace();
-            if (transaction!=null) {
+            if (transaction != null) {
                 transaction.rollback();
             }
-        }
-        finally{
+        } finally {
             session.close();
         }
-        return emp;
+        return id;
     }
 }

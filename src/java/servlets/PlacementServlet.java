@@ -55,7 +55,7 @@ public class PlacementServlet extends HttpServlet {
             request.getSession().setAttribute("placements", ipc.getAll());
             request.getSession().setAttribute("participants", ipac.getAll());
             request.getSession().setAttribute("clients", igdao.getAll());
-//            request.getSession().setAttribute("genPId", generateId.genId());
+            request.getSession().setAttribute("genPId", generateId.genId());
             response.sendRedirect("placement.jsp");
         }
     }
