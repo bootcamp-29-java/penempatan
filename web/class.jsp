@@ -21,7 +21,11 @@
     } else if (cl == null || bc == null || lessons == null || trainers == null || genId == null) {
         response.sendRedirect("classservlet");
     } else {
-
+       if(logSession.contains("3")||logSession.contains("")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -49,6 +53,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Class and Batch</h5>
                 <div class="card-body">
@@ -62,6 +67,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
 
 
             <br>
@@ -89,12 +95,14 @@
                                 <td scope="row"><%=empl.getLesson().getName()%></td>
                                 <td scope="row"><%=empl.getBatch().getId()%></td>
                                 <td scope="row"><%=empl.getTrainer().getFirstName()%></td>
-
+                                    
                                 <td class="text-center">
+                                <% if(logSession.contains("1")||logSession.contains("4")) {%>
                                     <button onclick="getData('<%=empl.getLesson().getId()%>', '<%=empl.getBatch().getId()%>', '<%=empl.getTrainer().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
                                        <i class="far fa-edit"></i> EDIT</button>
                                 </td>
                                 <td class="text-center"><button onclick='setAlertClass("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                                <% } %>
                             </tr>
                             <%
                                 }
@@ -127,11 +135,13 @@
                             %>
                             <tr>
                                 <td scope="row"><%=b.getId()%></td>
+                                <% if(logSession.contains("1")||logSession.contains("4")){ %>
                                 <td>
                                     <button onclick="getDataBatch('<%=b.getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBatch">
                                         EDIT</button>
                                 </td>
                                 <td><button onclick='setAlertBatch("<%=b.getId()%>")' type=""class="btn btn-danger">HAPUS</button></td>
+                                <% } %>
                             </tr>
                             <%
                                 }
@@ -354,6 +364,7 @@
 </body>
 </html>
 <%
+        }
     }
 
     session.removeAttribute("status");

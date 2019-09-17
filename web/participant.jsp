@@ -28,6 +28,11 @@
     } else if (participants == null || classes == null || employees == null) {
         response.sendRedirect("participantservlet");
     } else {
+        if(logSession.contains("3")||logSession.contains("")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -55,6 +60,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <%if(logSession.contains("2")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Participant</h5>
                 <div class="card-body">
@@ -64,7 +70,9 @@
                         Add Participant    
                     </button>
                 </div>
-            </div><br>
+            </div>
+            <% } %>
+            <br>
             <div class="card w-100">
                 <h5 class="card-header text-center">List Participant</h5>
                 <div class="card-body">
@@ -225,6 +233,7 @@
 
 </html>
 <%
+        }
     }
     session.removeAttribute("status");
     session.removeAttribute("participants");

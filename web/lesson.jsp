@@ -7,7 +7,8 @@
     List<EmployeeRole> logSession = (List<EmployeeRole>) session.getAttribute("sessionlogin");
     List<Lesson> lessons = (List<Lesson>) session.getAttribute("lessons");
     String status = (String) session.getAttribute("status");
-    out.println(status);
+//    out.println(status);
+    out.println(logSession);
     if (logSession == null) {
         out.print(logSession);
         out.println("<script>alert('Anda belum login!')</script>");
@@ -15,6 +16,11 @@
     } else if (lessons == null) {
         response.sendRedirect("lessonservlet");
     } else {
+        if(logSession.contains("")||logSession.contains("3")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -41,6 +47,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Lesson</h5>
                 <div class="card-body">
@@ -51,6 +58,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <br>
             <div class="card ">
                 <h5 class="card-header text-center">List Lesson</h5>
@@ -72,10 +80,12 @@
                                 <td scope="row"><%=empl.getId()%></td>
                                 <td scope="row"><%=empl.getName()%></td>
                                 <td class="text-center">
+                                <% if(logSession.contains("1")||logSession.contains("4")) { %>
                                     <button onclick="getData('<%=empl.getId()%>', '<%=empl.getName()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLesson">
                                        <i class="far fa-edit"></i> EDIT</button>
                                 </td>
                                 <td class="text-center"><button onclick='setAlert("<%=empl.getId()%>")' type="" class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                                <% } %>
                             </tr>
                             <%
                                 }
@@ -178,6 +188,7 @@
     </body>
 </html>
 <%
+        }
     }
     session.removeAttribute("lessons");
     session.removeAttribute("status");

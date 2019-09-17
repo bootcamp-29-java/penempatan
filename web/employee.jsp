@@ -17,6 +17,7 @@
     String genId = (String) session.getAttribute("genId");
     String status = (String) session.getAttribute("status");
     out.print(status);
+    out.print(logSession);
     if (logSession == null) {
         out.print(logSession);
         out.println("<script>alert('Anda belum login!')</script>");
@@ -24,6 +25,11 @@
     } else if (employees == null || genId == null) {
         response.sendRedirect("employeeservlet1");
     } else {
+         if(logSession.contains("2")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -57,6 +63,7 @@
     <body>
         <div class="container">
             <!--Card atas-->
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Add Employee </h5>
                 <div class="card-body">
@@ -67,6 +74,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
         </div>
         <!--card atas-->
         <br>
@@ -89,13 +97,14 @@
                             <th scope="col">Phone Number</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody>
                         <%
                             for (Employee empl : employees) {
                         %>
                         <tr>
+                            
                             <td scope="row"><%=empl.getId()%></td>
                             <td scope="row"><%=empl.getFirstName()%></td>
                             <td scope="row"><%=empl.getLastName()%></td>
@@ -107,13 +116,25 @@
                             <td scope="row"><%=empl.getPhoto()%></td>
                             <td scope="row"><%=empl.getReligion()%></td>
                             <td scope="row"><%=empl.getPhone()%></td>
+                            <% if(logSession.contains("1")||logSession.contains("4")){
+                                if(logSession.contains("4")){ %>
                             <td class="text-center">
                                 <button onclick="getData('<%=empl.getId()%>', '<%=empl.getFirstName()%>', '<%=empl.getLastName()%>', '<%=empl.getEmail()%>', '<%=empl.getPhone()%>', '<%=empl.getBirthPlace()%>', '<%=empl.getBirthDate()%>', '<%=empl.getGender()%>'
                                                 , '<%=empl.getNationality()%>', '<%=empl.getPhoto()%>', '<%=empl.getReligion()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
-                                    <i class="far fa-edit"></i> EDIT</button>
+                                <i class="far fa-edit"></i> EDIT</button>
                             </td>
-                            <td class="text-center"><button onclick='setAlert("<%=empl.getId()%>")' class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                            <% } %>
+                                <%if(logSession.contains("1")) {%>
+                            <td class="text-center">
+                                <button onclick="getData('<%=empl.getId()%>', '<%=empl.getFirstName()%>', '<%=empl.getLastName()%>', '<%=empl.getEmail()%>', '<%=empl.getPhone()%>', '<%=empl.getBirthPlace()%>', '<%=empl.getBirthDate()%>', '<%=empl.getGender()%>'
+                                                , '<%=empl.getNationality()%>', '<%=empl.getPhoto()%>', '<%=empl.getReligion()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                                <i class="far fa-edit"></i> EDIT</button>
+                            </td>
+                                <td class="text-center"><button onclick='setAlert("<%=empl.getId()%>")' class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                            <% } %>
                         </tr>
+                        <% } %>
+
                         <%
                             }
                         %>
@@ -122,7 +143,6 @@
                 <!--DATA TABLE HERE-->
             </div>
         </div>
-    </div>
     <!--Modal-->
     <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeAccount" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -272,6 +292,7 @@
 
 </html>
 <%
+         }
     }
 
     session.removeAttribute("status");

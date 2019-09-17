@@ -28,6 +28,11 @@
     } else if (placements == null || participants == null || clients == null || genId == null) {
         response.sendRedirect("placementservlet");
     } else {
+        if(logSession.contains("")||logSession.contains("3")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -56,6 +61,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Placement</h5>
                 <div class="card-body">
@@ -66,6 +72,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <br>
              <div class="card w-100">
             <h5 class="card-header text-center">List Placement</h5>
@@ -102,7 +109,9 @@
                                                 '<%=empl.getParticipant().getId()%>', '<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPlacement ">
                                    <i class="far fa-edit"></i> EDIT</button>
                             </td>
+                            <% if(logSession.contains("1")){ %>
                             <td class="text-center"><button onclick='setAlert("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                            <% } %>
                         </tr>
                         <%
                             }
@@ -254,8 +263,8 @@
     </body>
 </html>
 <%
+        }
     }
-
     request.removeAttribute("genPId");
     request.removeAttribute("placements");
     request.removeAttribute("participants");

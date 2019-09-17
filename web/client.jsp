@@ -16,7 +16,11 @@
     } else if (cli == null || genId == null) {
         response.sendRedirect("clientservlet");
     } else {
-
+        if(logSession.contains("1")||logSession.contains("4")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 <html>
     <head>
@@ -42,6 +46,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100 " style="margin-top: 20px;">
                 <h5 class="card-header ">Create Client</h5>
                 <div class="card-body">
@@ -52,6 +57,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <br>
             <div class="card">
                 <h5 class="card-header text-center">List Client</h5>
@@ -69,21 +75,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%                                for (Client empl : cli) {
-                            %>
+                            <%for (Client empl : cli) {%>
                             <tr>
                                 <td scope="row" class="text-center"><%=empl.getId()%></td>
                                 <td scope="row" ><%=empl.getName()%></td>
                                 <td scope="row"><%=empl.getLocation()%></td>
                                 <td class="text-center">
+                                <% if(logSession.contains("1")||logSession.contains("4")){
                                     <button onclick="getData('<%=empl.getId()%>', '<%=empl.getName()%>', '<%=empl.getLocation()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClient">
                                        <i class="far fa-edit"></i> EDIT</button>
                                 </td>
                                 <td class="text-center"><button onclick='setAlert(<%=empl.getId()%>)' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                                <% } %>
                             </tr>
-                            <%
-                                }
-                            %>
+                            <% } %>
                             </div> 
                     </table>
                     <!--card atas-->
@@ -188,6 +193,7 @@
     </body>
 </html>
 <%
+       }
     }
     request.removeAttribute("clients");
     request.removeAttribute("status");

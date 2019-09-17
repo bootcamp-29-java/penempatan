@@ -14,11 +14,14 @@ import models.Class;
 import idaos.IGeneralDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.EmployeeRole;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -52,6 +55,10 @@ public class ParticipantServlet extends HttpServlet {
             request.getSession().setAttribute("classes", igdao.getAll());
             request.getSession().setAttribute("employees", ierc.getParticipant());
             request.getSession().setAttribute("status", status);
+            List<String>Ses =new ArrayList<>();
+            for (EmployeeRole empl : ierc.getById("mii.bootcamp29@gmail.com")) {
+                Ses.add(String.valueOf(empl.getRole().getId()));
+            }
 
             response.sendRedirect("participant.jsp");
         }

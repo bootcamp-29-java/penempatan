@@ -36,7 +36,7 @@ public class EmployeeRoleDAO implements IRoleDAO{
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-            query = session.createQuery("FROM EmployeeRole WHERE employee.id=:id");
+            query = session.createQuery("FROM EmployeeRole WHERE employee.email=:id");
             query.setParameter("id", id);
             roles = query.list();
         } catch (Exception e) {

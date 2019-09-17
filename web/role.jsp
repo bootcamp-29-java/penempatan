@@ -23,6 +23,11 @@
     } else if (roles == null || employeesRole == null || employees == null || generateIdERole == null || generateIdRole == null) {
         response.sendRedirect("roleservlet");
     } else {
+        if(logSession.contains("")||logSession.contains("3")||logSession.contains("2")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -49,6 +54,7 @@
     <body>
         <!--Card atas-->
         <div class="container">
+            <% if(logSession.contains("1")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Role</h5>
                 <div class="card-body">
@@ -62,6 +68,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <br>
 
             <div class="card w-100">
@@ -88,10 +95,12 @@
                                 <td scope="row"><%=empl.getEmployee().getFirstName()%></td>
                                 <td scope="row"><%=empl.getRole().getName()%></td>
                                 <td class="text-center">
+                                <% if(logSession.contains("1")) { %>
                                     <button onclick="getDataERole('<%=empl.getId()%>', '<%=empl.getEmployee().getId()%>', '<%=empl.getRole().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeRole"><i class="far fa-edit"></i>
                                          EDIT</button>
                                 </td>
                                 <td class="text-center"><button onclick='setAlertERole("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                                <% } %>
                             </tr>
                             <%
                                 }
@@ -337,8 +346,8 @@
     </body>
 </html>
 <%
+        }
     }
-
     session.removeAttribute("status");
     session.removeAttribute("roles");
     session.removeAttribute("employees");

@@ -10,12 +10,15 @@ import controllers.LoginRegisterController;
 import icontrollers.ILoginRegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.EmployeeRole;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -85,9 +88,13 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         status = ilrc.login(email, password);
+        List<String>Ses =new ArrayList<>();
+        for (EmployeeRole empl : erc.getById("mii.bootcamp29@gmail.com")) {
+            Ses.add(String.valueOf(empl.getRole().getId()));
+        }
         if (status.equalsIgnoreCase("Login Berhasil")) {
             request.getSession().setAttribute("status", status);
-            request.getSession().setAttribute("sessionlogin", erc.getById(email));
+            request.getSession().setAttribute("sessionlogin", Ses);
             response.sendRedirect("index.jsp");
         } else {
             request.getSession().setAttribute("status", status);

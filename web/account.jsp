@@ -22,6 +22,11 @@
     } else if (accounts == null) {
         response.sendRedirect("accountservlet");
     } else {
+        if(logSession.contains("4")||logSession.contains("")||logSession.contains("3")||logSession.contains("2")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 <!DOCTYPE html>
 <html>
@@ -134,8 +139,8 @@
 </html>
 
 <%
+        }
     }
-
     session.removeAttribute("status");
     session.removeAttribute("accounts");
 %>

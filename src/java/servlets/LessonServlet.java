@@ -14,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Lesson;
 import org.hibernate.SessionFactory;
+import tools.GenerateId;
 import tools.HibernateUtil;
 
 /**
@@ -27,6 +29,7 @@ public class LessonServlet extends HttpServlet {
     private String status;
     private SessionFactory factory = HibernateUtil.getSessionFactory();
     private ILessonController ilc = new LessonController(factory);
+    private GenerateId<Lesson> less = new GenerateId<>(factory,Lesson.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,6 +44,7 @@ public class LessonServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             request.getSession().setAttribute("lessons", ilc.getall());
+            request.getSession().setAttribute("coba_id", less.genId());
             response.sendRedirect("lesson.jsp");
         }
     }

@@ -28,6 +28,11 @@
     } else if (interviews == null || participants == null || clients == null || genId == null) {
         response.sendRedirect("interviewservlet");
     } else {
+        if(logSession.contains("")||logSession.contains("3")){
+            out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
+            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+        }
+        else{
 %>
 
 <html>
@@ -55,6 +60,7 @@
     <body>
         <!--card atas-->
         <div class="container">
+            <% if(logSession.contains("1")||logSession.contains("4")){ %>
             <div class="card w-100" style="margin-top: 20px;">
                 <h5 class="card-header">Create Interview</h5>
                 <div class="card-body">
@@ -65,6 +71,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
         </div>
         <br>
         <div class="card w-100">
@@ -105,7 +112,9 @@
                                                 '<%=empl.getPic()%>', '<%=empl.getParticipant().getId()%>', '<%=empl.getClient().getId()%>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addInterview">
                                     <i class="far fa-edit"></i> EDIT</button>
                             </td>
+                            <% if(logSession.contains("1")){ %>
                             <td class="text-center"><button onclick='setAlert("<%=empl.getId()%>")' type=""class="btn btn-danger"><i class="far fa-trash-alt"></i> HAPUS</button></td>
+                            <% } %>
                             <td class="text-center"><button onclick='setAlertSendInvitation("<%=empl.getId()%>", "<%=empl.getParticipant().getEmployee().getEmail()%>", "<%=empl.getParticipant().getEmployee().getFirstName()%>")' type=""class="btn btn-unique"><i class="fas fa-envelope"></i>     Send Email</button></td>
                             <td class="text-center">
                                 <button onclick="getDataAcc('<%=empl.getId()%>', '<%=empl.getDate()%>', '<%=empl.getTime()%>', '<%=empl.getLocation()%>', '<%=empl.getDepartment()%>',
@@ -352,6 +361,7 @@
 </html>
 <%
         session.removeAttribute("status");
+        }
     }
     session.removeAttribute("genId");
     session.removeAttribute("interviews");
