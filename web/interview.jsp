@@ -30,7 +30,7 @@
     } else {
         if(logSession.contains("")||logSession.contains("3")){
             out.println("<script>alert('Anda Tidak Memiliki Akses Ke Menu Ini!')</script>");
-            out.println("<script>window.location.href=\"participant.jsp\"</script>");
+            out.println("<script>window.location.href=\"index.jsp\"</script>");
         }
         else{
 %>
